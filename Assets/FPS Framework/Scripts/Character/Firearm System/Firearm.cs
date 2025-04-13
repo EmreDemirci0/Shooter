@@ -416,6 +416,8 @@ namespace Akila.FPSFramework
             // Fire if in firing state
             if (isFiring)
             {
+            print("harbi ettti emitle burayı  ");
+                //
                 Fire();
             }
 
@@ -618,12 +620,12 @@ namespace Akila.FPSFramework
         /// </summary>
         public void Fire()
         {
+
             // Exit if not ready to fire
             if (!readyToFire || firePrevented)
             {
                 return;
             }
-
             Vector3 firePosition = Vector3.zero;
             Quaternion fireRotation = Quaternion.identity;
             Vector3 fireDirection = Vector3.zero;

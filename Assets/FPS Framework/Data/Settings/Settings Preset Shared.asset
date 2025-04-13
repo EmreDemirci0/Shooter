@@ -43,7 +43,7 @@ MonoBehaviour:
       selectedFunction: 0
     - name: Display Resolution
       functionName: SetDisplayResolution
-      foldout: 0
+      foldout: 1
       selectedFunction: 1
     - name: Frame Limit
       functionName: SetFrameLimit

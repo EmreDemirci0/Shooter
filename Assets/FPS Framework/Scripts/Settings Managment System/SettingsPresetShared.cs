@@ -17,7 +17,7 @@ namespace Akila.FPSFramework
             List<Resolution> resolutions = FPSFrameworkCore.GetResolutions().ToList();
 
             Resolution resolution = resolutions[Mathf.Clamp(value, 0, resolutions.Count - 1)];
-            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+            //Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         }
 
         public void SetFrameLimit(float value)

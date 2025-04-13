@@ -11,6 +11,7 @@ public class Player{
     public string userID;
     public string PlaName;
     public string roomID;
+    public Vector3 pos;
 }
 [Serializable]
 public class Room{

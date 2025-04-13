@@ -11,7 +11,7 @@ public class LoginController : MonoBehaviour
 
     void Start()
     {
-        SocketManager.Instance.socket.OnUnityThread("JoinRooms",rooms=>{
+        SocketManager.Instance.socket.OnUnityThread("JoinRoomss",rooms=>{
             var room=JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
             SocketManager.Instance.room=room;
             SceneManager.LoadScene("Game");
