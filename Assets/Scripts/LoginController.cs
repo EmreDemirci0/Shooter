@@ -12,8 +12,6 @@ public class LoginController : MonoBehaviour
     void Start()
     {
         SocketManager.Instance.socket.OnUnityThread("JoinRooms",rooms=>{
-            print(rooms);
-
             var room=JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
             SocketManager.Instance.room=room;
             SceneManager.LoadScene("Game");
@@ -27,7 +25,7 @@ public class LoginController : MonoBehaviour
         {
             Player pla=new()
             {
-                name = nameInput.text,
+                PlaName = nameInput.text,
                 roomID="test"
             };
             SocketManager.Instance.player=pla;

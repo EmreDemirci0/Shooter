@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.Events;
+using TMPro;
 
 namespace Akila.FPSFramework
 {
@@ -13,7 +14,6 @@ namespace Akila.FPSFramework
         /// </summary>
         [Header("Base")]
         public string actorName;
-
         public GameObject playerPrefab;
         public int teamId = 0;
         public bool respawnable = true;

@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 [Serializable]
 public class Player{
     public string userID;
-    public string name;
+    public string PlaName;
     public string roomID;
 }
 [Serializable]
@@ -44,7 +44,7 @@ socket = new SocketIOUnity(uri, new SocketIOOptions
             };
             socket.Connect();
             socket.OnUnityThread("conn",dat=>{
-                SceneManager.LoadScene("Login");
+                SceneManager.LoadScene("Main Menu");
             });
     }
 

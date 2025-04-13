@@ -102,7 +102,7 @@ namespace Akila.FPSFramework
 
         protected void Update()
         {
-            if (FPSFrameworkCore.IsActive == false)
+            if (FPSFrameworkCore.IsActive == false )
                 return;
 
             //Read values in the update. You can't change input values from the external class as it will reset itself.
