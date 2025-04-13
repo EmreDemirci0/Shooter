@@ -72,15 +72,7 @@ namespace Akila.FPSFramework
         /// </summary>
         public bool crouchInput { get; set; }
 
-        /// <summary>
-        /// Is performing lean right input?
-        /// </summary>
-        public bool leanRightInput { get; set; }
-
-        /// <summary>
-        /// Is performing lean Left input?
-        /// </summary>
-        public bool leanLeftInput { get; set; }
+       
 
         /// <summary>
         /// The value added from the function AddLookAmount(). Setting this to anything will rotate the camera using the value.
@@ -91,7 +83,7 @@ namespace Akila.FPSFramework
         /// Using this value to always get sprint input regardless of the player state.
         /// This is used to then filter the input and choose when to use it.
         /// </summary>
-        [HideInInspector] public bool rawSprintInput;
+       /* [HideInInspector]*/ public bool rawSprintInput;
 
         private float lastSprintClickTime;
 
@@ -179,15 +171,12 @@ namespace Akila.FPSFramework
 
         private void LateUpdate()
         {
-            if (leanRightInput && leanLeftInput || sprintInput || tacticalSprintInput)
-            {
-                leanRightInput = false;
-                leanLeftInput = false;
-            }
+           
         }
-
+        
         protected void AddInputListner()
         {
+            Debug.Log("Girdi");
             //Sprint
             controls.Player.Sprint.performed += context =>
             {
@@ -214,45 +203,7 @@ namespace Akila.FPSFramework
                     crouchInput = !crouchInput;
             };
 
-            //Lean Right
-            controls.Player.LeanRight.performed += context =>
-            {
-                if (!toggleLean)
-                {
-                    leanRightInput = true;
-                }
-            };
-
-            controls.Player.LeanRight.canceled += context =>
-            {
-                if (!toggleLean)
-                {
-                    leanRightInput = false;
-                }
-                else
-                {
-                    leanLeftInput = false;
-                    leanRightInput = !leanRightInput;
-                }
-            };
-
-            //Lean Left
-            controls.Player.LeanLeft.performed += context =>
-            {
-                if (!toggleLean)
-                    leanLeftInput = true;
-            };
-
-            controls.Player.LeanLeft.canceled += context =>
-            {
-                if (!toggleLean)
-                    leanLeftInput = false;
-                else
-                {
-                    leanRightInput = false;
-                    leanLeftInput = !leanLeftInput;
-                }
-            };
+            
         }
 
         /// <summary>
@@ -264,7 +215,7 @@ namespace Akila.FPSFramework
             addedLookValue += value;
         }
 
-
+        //public bool canmove;
         private void OnEnable()
         {
             //Initinaling input actins for this class.
@@ -274,7 +225,12 @@ namespace Akila.FPSFramework
 
             //Using event logic to allow external disabling of the input.
             //Example: You could set the sprint value from the external class without it resting itself.
-            AddInputListner();
+            
+            //if(SocketManager.Instance.player.userID == GetComponent<Actor>().id)
+            //{ 
+            //if(canmove)
+                AddInputListner();
+            //}
         }
 
         private void OnDestroy()

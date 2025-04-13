@@ -65,10 +65,6 @@ namespace Akila.FPSFramework
         public Vector3 ResultRecoilRotation { get; set; }
         public Vector3 HeadbobPosition { get; set; }
         public Vector3 HeadbobRotation { get; set; }
-
-        public bool isLeaningRight { get; set; }
-        public bool isLeaningLeft { get; set; }
-
         private ProceduralAnimator proceduralAnimator { get; set; }
 
         public bool isActive { get; set; } = true;
@@ -193,26 +189,6 @@ namespace Akila.FPSFramework
             if (!UseLean) return;
 
             if (!isActive) return;
-
-                isLeaningRight = characterInput.leanRightInput;
-                isLeaningLeft = characterInput.leanLeftInput;
-            
-
-            if (isLeaningRight)
-            {
-                ResultLeanPosition = Vector3.Lerp(ResultLeanPosition, leanRightPosition, Time.deltaTime * smoothness);
-                currentLeanAngle = Mathf.Lerp(currentLeanAngle, -rotationAngle, Time.deltaTime * smoothness);
-            }
-            else if (isLeaningLeft)
-            {
-                ResultLeanPosition = Vector3.Lerp(ResultLeanPosition, leanLeftPosition, Time.deltaTime * smoothness);
-                currentLeanAngle = Mathf.Lerp(currentLeanAngle, rotationAngle, Time.deltaTime * smoothness);
-            }
-            else
-            {
-                ResultLeanPosition = Vector3.Lerp(ResultLeanPosition, Vector3.zero, Time.deltaTime * smoothness);
-                currentLeanAngle = Mathf.Lerp(currentLeanAngle, 0, Time.deltaTime * smoothness);
-            }
 
             ResultLeanRotation = new Vector3(0, 0, currentLeanAngle);
         }

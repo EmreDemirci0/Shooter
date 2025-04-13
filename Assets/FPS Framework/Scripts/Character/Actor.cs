@@ -16,6 +16,7 @@ namespace Akila.FPSFramework
         public string actorName;
         public GameObject playerPrefab;
         public int teamId = 0;
+        public string id;
         public bool respawnable = true;
 
         [Header("Statistics")]

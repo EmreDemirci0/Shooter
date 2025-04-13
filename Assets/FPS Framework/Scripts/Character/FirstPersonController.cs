@@ -202,7 +202,7 @@ namespace Akila.FPSFramework
                 landAudio.Setup(this, landSFX);
             }
         }
-
+        public bool canControl = true;
         protected virtual void Start()
         {
             if (!_Camera) _Camera = GetComponentInChildren<Camera>().transform;
@@ -228,86 +228,172 @@ namespace Akila.FPSFramework
         }
 
 
+        //protected virtual void Update()
+        //{
+        //    if (!isActive) return;
+
+        //    //slide down slope if on maxed angle slope
+        //    if (slideDownSlopes && OnMaxedAngleSlope())
+        //        slideVelocity += new Vector3(slopeDirection.x, -slopeDirection.y, slopeDirection.z) * slopeSlideSpeed * Time.deltaTime;
+        //    else
+        //        //reset velocity if not on slope
+        //        slideVelocity = Vector3.zero;
+
+        //    Vector3 targetVelocity = (SlopeDirection() * CharacterInput.moveInput.y + Orientation.right * CharacterInput.moveInput.x).normalized * speed;
+
+        //    //update desiredVelocity in order to normlize it and smooth the movement
+        //    desiredVelocity = slideVelocity + Vector3.SmoothDamp(desiredVelocity, targetVelocity * CharacterInput.moveInput.magnitude, ref desiredVelocityRef, acceleration);
+
+
+        //    if (!controller.isGrounded || OnSlope())
+        //    {
+        //        controller.stepOffset = 0;
+        //    }
+        //    else
+        //    {
+        //        controller.stepOffset = defaultstepOffset;
+        //    }
+
+        //    //copy desiredVelocity x, z with normlized values
+        //    velocity.x = (desiredVelocity.x);
+        //    velocity.z = (desiredVelocity.z);
+
+        //    //update speed according to if player is holding sprint
+        //    if (CharacterInput.sprintInput && !CharacterInput.tacticalSprintInput) speed = isCrouching ? crouchSpeed * speedMultiplier : sprintSpeed * speedMultiplier;
+        //    else if (!CharacterInput.tacticalSprintInput) speed = speed = isCrouching ? crouchSpeed * speedMultiplier : walkSpeed * speedMultiplier;
+
+        //    if (CharacterInput.tacticalSprintInput) speed = speed = isCrouching ? crouchSpeed * speedMultiplier : tacticalSprintSpeed * speedMultiplier;
+
+        //    //Do crouching
+        //    isCrouching = CharacterInput.crouchInput;
+        //    ApplyCrouching();
+
+        //    //update gravity and jumping
+        //    if (controller.isGrounded)
+        //    {
+        //        //set small force when grounded in order to staplize the controller
+        //        currentGravityForce = Physics.gravity.y * stickToGroundForce;
+
+
+        //        //check jumping input
+        //        if (CharacterInput.jumpInput)
+        //        {
+        //            onJump?.Invoke();
+
+        //            //update velocity in order to jump
+        //            currentGravityForce += jumpHeight + (-Physics.gravity.y * gravity * stickToGroundForce);
+
+        //            //play jump sound
+        //            if (jumpSFX)
+        //                jumpAudio.PlayOneShot();
+        //        }
+
+        //        velocity.y = currentGravityForce;
+        //    }
+        //    else if (velocity.magnitude * 3.5f < maxFallSpeed)
+        //    {
+        //        //add gravity
+        //        currentGravityForce += Physics.gravity.y * gravity * Time.deltaTime;
+        //        velocity.y = currentGravityForce;
+        //    }
+
+        //    _Camera.position = transform.position + ((Vector3.up * (controller.height - 1) + offset));
+
+        //    //move and update CollisionFlags in order to check if collition is coming from above ot center or bottom
+        //    CollisionFlags = controller.Move(velocity * Time.deltaTime);
+
+        //    //rotate camera
+        //    UpdateCameraRotation();
+
+        //    tacticalSprintAmount = CharacterInput.tacticalSprintInput ? 1 : 0;
+
+        //    MoveWithMovingPlatforms();
+        //}
         protected virtual void Update()
         {
             if (!isActive) return;
 
-            //slide down slope if on maxed angle slope
-            if (slideDownSlopes && OnMaxedAngleSlope())
-                slideVelocity += new Vector3(slopeDirection.x, -slopeDirection.y, slopeDirection.z) * slopeSlideSpeed * Time.deltaTime;
-            else
-                //reset velocity if not on slope
-                slideVelocity = Vector3.zero;
+            if (canControl)
+            {
+                Debug.Log("Hareket dettaylarý");
+                HandleMovement();
+                HandleJump();
+                HandleCameraLook();
+            }
 
+            HandleStepOffset();
+            ApplyCrouching();
+            UpdateCameraPosition();
+            MoveCharacter();
+            MoveWithMovingPlatforms();
+        }
+        private void HandleMovement()
+        {
             Vector3 targetVelocity = (SlopeDirection() * CharacterInput.moveInput.y + Orientation.right * CharacterInput.moveInput.x).normalized * speed;
 
-            //update desiredVelocity in order to normlize it and smooth the movement
-            desiredVelocity = slideVelocity + Vector3.SmoothDamp(desiredVelocity, targetVelocity * CharacterInput.moveInput.magnitude, ref desiredVelocityRef, acceleration);
+            desiredVelocity = slideVelocity + Vector3.SmoothDamp(
+                desiredVelocity,
+                targetVelocity * CharacterInput.moveInput.magnitude,
+                ref desiredVelocityRef,
+                acceleration
+            );
 
+            velocity.x = desiredVelocity.x;
+            velocity.z = desiredVelocity.z;
 
-            if (!controller.isGrounded || OnSlope())
-            {
-                controller.stepOffset = 0;
-            }
-            else
-            {
-                controller.stepOffset = defaultstepOffset;
-            }
+            if (CharacterInput.sprintInput && !CharacterInput.tacticalSprintInput)
+                speed = isCrouching ? crouchSpeed * speedMultiplier : sprintSpeed * speedMultiplier;
+            else if (!CharacterInput.tacticalSprintInput)
+                speed = isCrouching ? crouchSpeed * speedMultiplier : walkSpeed * speedMultiplier;
 
-            //copy desiredVelocity x, z with normlized values
-            velocity.x = (desiredVelocity.x);
-            velocity.z = (desiredVelocity.z);
+            if (CharacterInput.tacticalSprintInput)
+                speed = isCrouching ? crouchSpeed * speedMultiplier : tacticalSprintSpeed * speedMultiplier;
 
-            //update speed according to if player is holding sprint
-            if (CharacterInput.sprintInput && !CharacterInput.tacticalSprintInput) speed = isCrouching ? crouchSpeed * speedMultiplier : sprintSpeed * speedMultiplier;
-            else if (!CharacterInput.tacticalSprintInput) speed = speed = isCrouching ? crouchSpeed * speedMultiplier : walkSpeed * speedMultiplier;
-
-            if (CharacterInput.tacticalSprintInput) speed = speed = isCrouching ? crouchSpeed * speedMultiplier : tacticalSprintSpeed * speedMultiplier;
-
-            //Do crouching
             isCrouching = CharacterInput.crouchInput;
-            ApplyCrouching();
-
-            //update gravity and jumping
+        }
+        private void HandleJump()
+        {
             if (controller.isGrounded)
             {
-                //set small force when grounded in order to staplize the controller
                 currentGravityForce = Physics.gravity.y * stickToGroundForce;
 
-
-                //check jumping input
                 if (CharacterInput.jumpInput)
                 {
                     onJump?.Invoke();
-
-                    //update velocity in order to jump
                     currentGravityForce += jumpHeight + (-Physics.gravity.y * gravity * stickToGroundForce);
-
-                    //play jump sound
                     if (jumpSFX)
                         jumpAudio.PlayOneShot();
                 }
-                
+
                 velocity.y = currentGravityForce;
             }
             else if (velocity.magnitude * 3.5f < maxFallSpeed)
             {
-                //add gravity
                 currentGravityForce += Physics.gravity.y * gravity * Time.deltaTime;
                 velocity.y = currentGravityForce;
             }
+        }
+        private void HandleCameraLook()
+        {
+            Debug.Log("HandleCameraLook");
+            UpdateCameraRotation(); // Mevcut sistemde Q/E burada ayarlanýyor olabilir.
+        }
+        private void HandleStepOffset()
+        {
+            if (!controller.isGrounded || OnSlope())
+                controller.stepOffset = 0;
+            else
+                controller.stepOffset = defaultstepOffset;
+        }
 
+        private void UpdateCameraPosition()
+        {
             _Camera.position = transform.position + ((Vector3.up * (controller.height - 1) + offset));
+        }
 
-            //move and update CollisionFlags in order to check if collition is coming from above ot center or bottom
+        private void MoveCharacter()
+        {
             CollisionFlags = controller.Move(velocity * Time.deltaTime);
-
-            //rotate camera
-            UpdateCameraRotation();
-
-            tacticalSprintAmount = CharacterInput.tacticalSprintInput ? 1 : 0;
-
-            MoveWithMovingPlatforms();
         }
 
         public void ApplyCrouching()
@@ -367,6 +453,7 @@ namespace Akila.FPSFramework
 
         protected virtual void UpdateCameraRotation()
         {
+            Debug.Log("UpdateCameraRotation");
             if (prevCamRotation != _Camera.rotation) OnCameraRotationUpdated();
 
             yRotation += CharacterInput.lookInput.x;
@@ -429,10 +516,10 @@ namespace Akila.FPSFramework
             RaycastHit slopeHit;
             if (Physics.Raycast(transform.position, Vector3.down, out slopeHit))
             {
-                //get the direction result according to slope normal
+              
                 return (Vector3.Angle(Vector3.down, slopeHit.normal) - 180) * -1;
             }
-
+            Debug.Log("ELSE");
             //if not on slope then slope is forward ;)
             return 0;
         }

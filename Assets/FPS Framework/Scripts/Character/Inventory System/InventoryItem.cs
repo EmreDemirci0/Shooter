@@ -335,26 +335,23 @@ namespace Akila.FPSFramework
             if (leanRightAnimation != null)
             {
                 leanRightAnimation.triggerType = ProceduralAnimation.TriggerType.None;
-                leanRightAnimation.isPlaying = characterInput.leanRightInput;
             }
 
             if (leanLeftAnimation != null)
             {
                 leanLeftAnimation.triggerType = ProceduralAnimation.TriggerType.None;
-                leanLeftAnimation.isPlaying = characterInput.leanLeftInput;
+               
             }
 
             // Update right and left aiming lean animations
             if (leanRightAimAnimation != null)
             {
                 leanRightAimAnimation.triggerType = ProceduralAnimation.TriggerType.None;
-                leanRightAimAnimation.isPlaying = characterInput.leanRightInput;
             }
 
             if (leanLeftAimAnimation != null)
             {
                 leanLeftAimAnimation.triggerType = ProceduralAnimation.TriggerType.None;
-                leanLeftAimAnimation.isPlaying = characterInput.leanLeftInput;
             }
         }
 
