@@ -25,7 +25,7 @@ namespace Akila.FPSFramework
         public bool isGrounded { get; set; }
         private bool previouslyGrounded;
 
-        public bool isAiming { get; set; }
+        public bool isAiming; //{ get; set; }
         public bool attemptingToAim { get; set; }
         public bool isMoving => !IsAlmostStopped();
 

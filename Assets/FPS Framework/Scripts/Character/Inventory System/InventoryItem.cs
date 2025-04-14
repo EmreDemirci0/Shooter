@@ -202,7 +202,7 @@ namespace Akila.FPSFramework
         {
             Setup();
         }
-
+       
         /// <summary>
         /// Initializes necessary components for the item, including animations and references.
         /// </summary>
@@ -271,6 +271,7 @@ namespace Akila.FPSFramework
         /// </summary>
         protected virtual void Update()
         {
+            Debug.Log("isAiming:" + isAiming);
             if (walkingWaveAnimationModifier != null)
             {
                 // Update walking wave animation based on character velocity

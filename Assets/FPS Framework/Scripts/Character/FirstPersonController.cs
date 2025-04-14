@@ -11,6 +11,7 @@ namespace Akila.FPSFramework
     [RequireComponent(typeof(CharacterController), typeof(CharacterInput))]
     public class FirstPersonController : MonoBehaviour, ICharacterController
     {
+        public bool canControl = true;
         [Header("Movement")]
         [Tooltip("The amount of time needed to walk or sprint in full speed.")]
         public float acceleration = 0.1f;
@@ -202,7 +203,7 @@ namespace Akila.FPSFramework
                 landAudio.Setup(this, landSFX);
             }
         }
-        public bool canControl = true;
+
         protected virtual void Start()
         {
             if (!_Camera) _Camera = GetComponentInChildren<Camera>().transform;
@@ -375,7 +376,6 @@ namespace Akila.FPSFramework
         }
         private void HandleCameraLook()
         {
-            Debug.Log("HandleCameraLook");
             UpdateCameraRotation(); // Mevcut sistemde Q/E burada ayarlanýyor olabilir.
         }
         private void HandleStepOffset()
@@ -453,7 +453,6 @@ namespace Akila.FPSFramework
 
         protected virtual void UpdateCameraRotation()
         {
-            Debug.Log("UpdateCameraRotation");
             if (prevCamRotation != _Camera.rotation) OnCameraRotationUpdated();
 
             yRotation += CharacterInput.lookInput.x;

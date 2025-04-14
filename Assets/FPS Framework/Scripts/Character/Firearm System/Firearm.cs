@@ -10,6 +10,7 @@ namespace Akila.FPSFramework
     [RequireComponent(typeof(FirearmAttachmentsManager))]
     public class Firearm : InventoryItem
     {
+        public bool canMove;
         [Tooltip("The firearm preset that defines all values for this firearm. This preset is a ScriptableObject.")]
         public FirearmPreset preset;
 
@@ -124,7 +125,7 @@ namespace Akila.FPSFramework
         /// <summary>
         /// Whether the firearm is currently firing.
         /// </summary>
-        public bool isFiring { get; set; }
+        public bool isFiring;// { get; set; }
 
         /// <summary>
         /// Whether the firearm is out of ammo.
@@ -387,7 +388,8 @@ namespace Akila.FPSFramework
             }
 
             // Update input and movement
-            UpdateInput();
+            if(canMove)
+                UpdateInput();
             AdjustPlayerSpeed();
 
             // Stop reloading if magazine is full and reload method is scripted
@@ -416,7 +418,7 @@ namespace Akila.FPSFramework
             // Fire if in firing state
             if (isFiring)
             {
-            print("harbi ettti emitle burayı  ");
+                print("harbi ettti emitle burayı  ");
                 //
                 Fire();
             }
@@ -425,6 +427,7 @@ namespace Akila.FPSFramework
             {
                 if (aimingAnimation)
                 {
+                    Debug.Log("Buney 2"+ aimingAnimation.isPlaying);
                     characterManager.isAiming = aimingAnimation.isPlaying;
                     characterManager.attemptingToAim = aimingAnimation.velocity != 0;
                 }
@@ -554,6 +557,7 @@ namespace Akila.FPSFramework
 
             if (itemInput.ReloadInput)
             {
+                Debug.Log("MErmi değiltir");
                 Reload();
             }
 
