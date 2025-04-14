@@ -54,8 +54,8 @@ namespace Akila.FPSFramework
         {
             IInteractable interactable = GetInteractable();
 
-            if(HUDObject)
-            HUDObject.SetActive(isActive && interactable != null);
+            /*if(HUDObject)
+            HUDObject.SetActive(isActive && interactable != null);*/
 
             if(interactable != null && isActive)
             {

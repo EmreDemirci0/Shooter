@@ -9,7 +9,7 @@ namespace Akila.FPSFramework
     {
         public void SetDisplayMode(int value)
         {
-            Screen.fullScreen = (value == 0);
+            //Screen.fullScreen = (value == 0);
         }
 
         public void SetDisplayResolution(int value)

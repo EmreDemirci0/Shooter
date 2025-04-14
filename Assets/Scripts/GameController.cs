@@ -23,6 +23,8 @@ public class GameController : MonoBehaviour
                     print(den.gameObject.name);
                     den.gameObject.transform.position=pla.pos;
                 }
+                    den.GetComponent<FirstPersonController>().SetRotaitonSoceket(pla.rotate.x, pla.rotate.y);
+
             });
     }
     void Start()

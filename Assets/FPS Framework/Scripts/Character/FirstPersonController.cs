@@ -469,8 +469,18 @@ namespace Akila.FPSFramework
 
             yRotation += CharacterInput.lookInput.x;
             xRotation -= CharacterInput.lookInput.y;
+            SocketManager.Instance.player.rotate.x = xRotation;
+            SocketManager.Instance.player.rotate.y = yRotation;
+                string js=JsonUtility.ToJson(SocketManager.Instance.player);
 
-            xRotation = Mathf.Clamp(xRotation, minimumX, maximumX);
+            SocketManager.Instance.socket.Emit("GetPlayerMove",js);
+
+            
+        }
+
+        public void SetRotaitonSoceket(float xRotation , float yRotation)
+        {
+xRotation = Mathf.Clamp(xRotation, minimumX, maximumX);
 
             cameraRotation = Quaternion.Slerp(cameraRotation, Quaternion.Euler(xRotation, yRotation, 0), Time.deltaTime * 100);
             playerRotation = Quaternion.Slerp(playerRotation, Quaternion.Euler(0, yRotation, 0), Time.deltaTime * 100);
