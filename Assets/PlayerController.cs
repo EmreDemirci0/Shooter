@@ -1,4 +1,5 @@
 using Akila.FPSFramework;
+using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,18 +11,31 @@ public class PlayerController : MonoBehaviour
 
     public Inventory inv;
 
+
+    private void OnEnable()
+    {
+        
+    }
     public void SetControl()
     {
         GetComponent<FirstPersonController>().canControl = canMove;
-        Invoke(nameof(FireControl),.2f);
-
+    }
+    void Update()
+    {
+        //??? düzgün değil çok yanlış düzeltilecek !!!
+        FireControl();
     }
 
     void FireControl()
     {
         foreach (var item in inv.items)
         {
-            item.gameObject.GetComponentInChildren<Firearm>().canMove = canMove;
+            if (!item)
+                return;
+            if (item.gameObject.TryGetComponent<Firearm>(out var fire))
+            {
+                fire.canMove = canMove;
+            }
         }
     }
 }

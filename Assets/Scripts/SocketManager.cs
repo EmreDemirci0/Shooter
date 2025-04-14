@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using SocketIOClient;
-using SocketIOClient.Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +13,7 @@ public class Player{
     public string userID;
     public string roomID;
     public Vector3 pos;
+    public Vector3 rotate;
 }
 [Serializable]
 public class Room{
@@ -32,12 +32,8 @@ public class SocketManager : Singleton<SocketManager>
     {
            socket = new SocketIOUnity(uri, new SocketIOOptions
     {
-        Query = new Dictionary<string, string> { { "token", "UNITY" } },
-        Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
-    })
-    {
-        JsonSerializer = new NewtonsoftJsonSerializer()
-    };
+        Query = new Dictionary<string, string> { { "token", "UNITY" } }
+    });
     socket.OnConnected += (s, e) =>{
         socket.Emit("test","sa");
     };

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine;
 using UnityEngine.Events;
 using Akila.FPSFramework.Internal;
+using Newtonsoft.Json;
 
 namespace Akila.FPSFramework
 {
@@ -178,6 +179,7 @@ namespace Akila.FPSFramework
 
         private void OnEnable()
         {
+            
             footStepsAudio.Clear();
 
             foreach (AudioProfile profile in footstepsSFX)
@@ -351,7 +353,6 @@ namespace Akila.FPSFramework
                 speed = isCrouching ? crouchSpeed * speedMultiplier : tacticalSprintSpeed * speedMultiplier;
 
             isCrouching = CharacterInput.crouchInput;
-            print(transform.position);
         }
         private void HandleJump()
         {
@@ -394,7 +395,17 @@ namespace Akila.FPSFramework
 
         private void MoveCharacter()
         {
+            if(!canControl)
+            return;
             CollisionFlags = controller.Move(velocity * Time.deltaTime);
+            if(controller.velocity.magnitude > 0f)
+            {
+                //hareket emitle 
+                SocketManager.Instance.player.pos = transform.position;
+                string js=JsonUtility.ToJson(SocketManager.Instance.player);
+                SocketManager.Instance.socket.Emit("GetPlayerMove", js);
+            }
+            
         }
 
         public void ApplyCrouching()
@@ -519,8 +530,6 @@ namespace Akila.FPSFramework
               
                 return (Vector3.Angle(Vector3.down, slopeHit.normal) - 180) * -1;
             }
-            Debug.Log("ELSE");
-            //if not on slope then slope is forward ;)
             return 0;
         }
         private float speedMultiplier = 1;
