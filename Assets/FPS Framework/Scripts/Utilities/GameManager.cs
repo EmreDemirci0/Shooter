@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 namespace Akila.FPSFramework
@@ -13,7 +14,6 @@ namespace Akila.FPSFramework
 
         [SerializeField] DeathCamera deathCamera;
         [SerializeField] UIManager uIManager;
-
         private void Awake()
         {
             if(instance == null)

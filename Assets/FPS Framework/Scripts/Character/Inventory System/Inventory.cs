@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Linq;
 using System;
 using System.Reflection;
+using UnityEngine.Events;
 
 namespace Akila.FPSFramework
 {
@@ -29,10 +30,15 @@ namespace Akila.FPSFramework
         private int previousItemIndex { get; set; }
         public int currentItemIndex { get; set; }
 
-
-        List<InventoryItem> IInventory.items { get => items; set => items = value; }
+        List<InventoryItem> IInventory.items
+        {
+            get => items; set
+            {
+                items = value;
+            }
+        }
         int IInventory.maxSlots { get => maxSlots; }
-        float IInventory.dropForce {  get => dropForce; }
+        float IInventory.dropForce { get => dropForce; }
         Transform IInventory.dropPoint { get => dropLocation; }
         public bool isInputActive { get; set; } = true;
 
@@ -101,10 +107,10 @@ namespace Akila.FPSFramework
                 //Empty
                 lastItemIndex = previousItemIndex;
             }
-            
+
             Switch(currentItemIndex, false);
 
-            
+
             //Update the item index
             previousItemIndex = currentItemIndex;
         }
@@ -122,13 +128,13 @@ namespace Akila.FPSFramework
             if (characterInput.controls.Player.Item7.triggered && items.Count >= 7) currentItemIndex = 6;
             if (characterInput.controls.Player.Item8.triggered && items.Count >= 8) currentItemIndex = 7;
             if (characterInput.controls.Player.Item9.triggered && items.Count >= 9) currentItemIndex = 8;
-            
+
             if (characterInput.controls.Player.SwitchItem.ReadValue<float>() > 0) currentItemIndex++;
 
             if (characterInput.controls.Player.SwitchItem.ReadValue<float>() < 0)
             {
                 currentItemIndex--;
-                
+
                 {
                     if (currentItemIndex < 0) currentItemIndex = items.ToArray().Length - 1;
                 }
@@ -136,7 +142,7 @@ namespace Akila.FPSFramework
 
             if (characterInput.controls.Player.DefaultItem.triggered) currentItemIndex = -1;
 
-            if(characterInput.controls.Player.NextItem.triggered) currentItemIndex++;
+            if (characterInput.controls.Player.NextItem.triggered) currentItemIndex++;
             if (characterInput.controls.Player.PreviousItem.triggered) currentItemIndex = lastItemIndex;
         }
 
@@ -146,14 +152,14 @@ namespace Akila.FPSFramework
         {
             List<InventoryItem> childrenItems = GetComponentsInChildren<InventoryItem>(true).ToList();
 
-            if(_defaultItem)
+            if (_defaultItem)
             {
                 childrenItems.Remove(_defaultItem);
             }
 
             if (childrenItems.Count == 0)
             {
-                    _defaultItem?.gameObject.SetActive(true);
+                _defaultItem?.gameObject.SetActive(true);
             }
 
             items = childrenItems;
@@ -166,7 +172,7 @@ namespace Akila.FPSFramework
             {
                 _defaultItem?.gameObject.SetActive(true);
 
-                foreach(InventoryItem item in childrenItems) 
+                foreach (InventoryItem item in childrenItems)
                 {
                     item.gameObject.SetActive(false);
                 }
@@ -176,7 +182,7 @@ namespace Akila.FPSFramework
 
             int num = 0;
 
-            if(_defaultItem) _defaultItem.gameObject.SetActive(false);
+            if (_defaultItem) _defaultItem.gameObject.SetActive(false);
 
             foreach (InventoryItem obj in items)
             {

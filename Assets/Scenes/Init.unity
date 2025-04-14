@@ -167,8 +167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player:
-    userID: 
     PlaName: 
+    socketID: 
+    userID: 
     roomID: 
     pos: {x: 0, y: 0, z: 0}
   room:
@@ -203,7 +204,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8a0a4087aea3941a57b9104c05a729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneName: Main Menu
 --- !u!4 &949052888
 Transform:
   m_ObjectHideFlags: 0

@@ -8,8 +8,10 @@ using UnityEngine.SceneManagement;
 
 [Serializable]
 public class Player{
-    public string userID;
+
     public string PlaName;
+    public string socketID;
+    public string userID;
     public string roomID;
     public Vector3 pos;
 }
@@ -35,6 +37,9 @@ public class SocketManager : Singleton<SocketManager>
     })
     {
         JsonSerializer = new NewtonsoftJsonSerializer()
+    };
+    socket.OnConnected += (s, e) =>{
+        socket.Emit("test","sa");
     };
 
     

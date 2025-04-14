@@ -351,6 +351,7 @@ namespace Akila.FPSFramework
                 speed = isCrouching ? crouchSpeed * speedMultiplier : tacticalSprintSpeed * speedMultiplier;
 
             isCrouching = CharacterInput.crouchInput;
+            print(transform.position);
         }
         private void HandleJump()
         {

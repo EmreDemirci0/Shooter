@@ -26,14 +26,14 @@ public class LoginController : MonoBehaviour
         {
             Player pla=new()
             {
+                socketID=SocketManager.Instance.socket.Id,
+                userID=SocketManager.Instance.socket.Id,
                 PlaName = nameInput.text,
                 roomID="test"
             };
             SocketManager.Instance.player=pla;
             string js=JsonUtility.ToJson(pla);
             SocketManager.Instance.socket.Emit("SetPla",js);
-            print("att");
-
         }
 
     }

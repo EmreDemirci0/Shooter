@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Init : MonoBehaviour
 {
-    public string SceneName="Main Menu";
-    private void Start() {
+    private void OnEnable() {
         SocketManager.Instance.socket.OnUnityThread("conn",dat=>{
-            SceneManager.LoadScene(SceneName);
+            SceneManager.LoadScene("Main Menu");
         });
     }
 }

@@ -16,14 +16,9 @@ public class GameController : MonoBehaviour
 
         foreach (var item in SocketManager.Instance.room.players)
         {
-            GameObject pla = Instantiate(player, spawnPos.position, quaternion.identity);
-            pla.GetComponent<PlayerController>().player = item;
-            if(item.userID==SocketManager.Instance.player.userID)
-            {
-                 pla.GetComponent<PlayerController>().canMove = true;
-            }
-             pla.GetComponent<PlayerController>().SetControl();
-            
+            AddPlayer(item);
+
+
         }
 
         SocketManager.Instance.socket.OnUnityThread("JoinRooms", rooms =>
@@ -43,11 +38,11 @@ public class GameController : MonoBehaviour
             {
                 foreach (var item in joinedPlayers)
                 {
-                    GameObject pla = Instantiate(player, spawnPos.position, quaternion.identity);
+                    AddPlayer(item);
                 }
             }
 
-            if(leftPlayers.Count() > 0)
+            if (leftPlayers.Count() > 0)
             {
 
             }
@@ -55,5 +50,20 @@ public class GameController : MonoBehaviour
 
         });
 
+    }
+
+    public void AddPlayer(Player item)
+    {
+        GameObject pla = Instantiate(player, spawnPos.position, quaternion.identity);
+        pla.GetComponent<PlayerController>().player = item;
+        if (item.userID == SocketManager.Instance.player.userID)
+        {
+            pla.GetComponent<PlayerController>().canMove = true;
+            pla.GetComponentInChildren<CameraManager>().mainCamera.enabled = true;
+            pla.GetComponentInChildren<CameraManager>().mainCamera.GetComponent<AudioListener>().enabled = true;
+            pla.GetComponentInChildren<CameraManager>().overlayCamera.enabled = true;
+            pla.GetComponentInChildren<InteractionsManager>().HUDObject.SetActive(true);
+        }
+        pla.GetComponent<PlayerController>().SetControl();
     }
 }

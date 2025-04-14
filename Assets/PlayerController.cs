@@ -6,18 +6,22 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Player player;
-    public bool canMove = true;
+    public bool canMove = false;
 
-    private void Start()
-    {
-        SetControl();
-    }
+    public Inventory inv;
+
     public void SetControl()
     {
         GetComponent<FirstPersonController>().canControl = canMove;
-        foreach (var item in GetComponentInChildren<Inventory>().items)
+        Invoke(nameof(FireControl),.2f);
+
+    }
+
+    void FireControl()
+    {
+        foreach (var item in inv.items)
         {
-            item.gameObject.GetComponent<Firearm>().canMove = canMove;
+            item.gameObject.GetComponentInChildren<Firearm>().canMove = canMove;
         }
     }
 }
