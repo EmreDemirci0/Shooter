@@ -30,6 +30,7 @@ public class LoginController : MonoBehaviour
             };
             SocketManager.Instance.player=pla;
             SocketManager.Instance.socket.Emit("SetPla",SocketManager.Instance.player);
+
         }
 
     }
