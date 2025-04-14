@@ -24,30 +24,29 @@ public class SocketManager : Singleton<SocketManager>
     public SocketIOUnity socket;
     public Player player;
     public Room room=new();
-    string uri="http://185.242.161.111:3000";
-    void Start()
+    //string uri="http://185.242.161.111:3000";
+    string uri="http://localhost:1234";
+    void OnEnable()
     {
-        socket = new SocketIOUnity(uri, new SocketIOOptions
-            {
-                Query = new Dictionary<string, string> { { "token", "UNITY" } },
-                Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
-            })
-            {
-                JsonSerializer = new NewtonsoftJsonSerializer()
-            };
-socket = new SocketIOUnity(uri, new SocketIOOptions
-            {
-                Query = new Dictionary<string, string> { { "token", "UNITY" } },
-                Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
-            })
-            {
-                JsonSerializer = new NewtonsoftJsonSerializer()
-            };
-            socket.Connect();
-            socket.OnUnityThread("conn",dat=>{
-                SceneManager.LoadScene("Main Menu");
-            });
+           socket = new SocketIOUnity(uri, new SocketIOOptions
+    {
+        Query = new Dictionary<string, string> { { "token", "UNITY" } },
+        Transport = SocketIOClient.Transport.TransportProtocol.WebSocket
+    })
+    {
+        JsonSerializer = new NewtonsoftJsonSerializer()
+    };
+
+    
+
+    socket.OnDisconnected += (sender, e) =>
+    {
+        Debug.Log("Socket.IO disconnected.");
+    };
+
+    socket.Connect();
     }
+
 
     private void OnApplicationQuit() {
         socket.Disconnect();

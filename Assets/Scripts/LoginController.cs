@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
 
 public class LoginController : MonoBehaviour
@@ -29,7 +30,9 @@ public class LoginController : MonoBehaviour
                 roomID="test"
             };
             SocketManager.Instance.player=pla;
-            SocketManager.Instance.socket.Emit("SetPla",SocketManager.Instance.player);
+            string js=JsonUtility.ToJson(pla);
+            SocketManager.Instance.socket.Emit("SetPla",js);
+            print("att");
 
         }
 
