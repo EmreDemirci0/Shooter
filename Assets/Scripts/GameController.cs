@@ -12,19 +12,35 @@ public class GameController : MonoBehaviour
     public Transform spawnPos;
 
     public List<PlayerController> PlaCont;
-    private void OnEnable() {
+
+    
+    private void OnEnable()
+    {
         SocketManager.Instance.socket.OnUnityThread("SetPlayerMove", data =>
             {
                 var pla = JsonConvert.DeserializeObject<List<Player>>(data.ToString())[0];
-                var den=PlaCont.FirstOrDefault(x => x.player.userID == pla.userID);
+                var den = PlaCont.FirstOrDefault(x => x.player.userID == pla.userID);
 
-                if (den.player.userID!= SocketManager.Instance.player.userID)
+                if (den.player.userID != SocketManager.Instance.player.userID)
                 {
-                    print(den.gameObject.name);
-                    den.gameObject.transform.position=pla.pos;
+                    den.gameObject.transform.position = pla.pos;
                 }
-                    den.GetComponent<FirstPersonController>().SetRotaitonSoceket(pla.rotate.x, pla.rotate.y);
+                den.GetComponent<FirstPersonController>().SetRotaitonSoceket(pla.rotate.x, pla.rotate.y);
 
+            });
+        SocketManager.Instance.socket.OnUnityThread("SetFire", data =>{
+            print("giriyorr ");
+                var fire = JsonConvert.DeserializeObject<List<Fire>>(data.ToString())[0];
+                var pla = PlaCont.FirstOrDefault(x => x.player.userID == fire.userID);
+                pla.inv.GetComponentInChildren<Firearm>().Fire(fire);
+        });
+            SocketManager.Instance.socket.OnUnityThread("SetReload", data =>
+            {
+                var dat = JsonConvert.DeserializeObject<List<string>>(data.ToString())[0];
+                if (dat == SocketManager.Instance.player.userID)
+                {
+
+                }
             });
     }
     void Start()
@@ -80,8 +96,10 @@ public class GameController : MonoBehaviour
             pla.GetComponentInChildren<CameraManager>().mainCamera.GetComponent<AudioListener>().enabled = true;
             pla.GetComponentInChildren<CameraManager>().overlayCamera.enabled = true;
             pla.GetComponentInChildren<InteractionsManager>().HUDObject.SetActive(true);
+            
         }
-            pla.name = item.PlaName;
+
+        pla.name = item.PlaName;
 
         pla.GetComponent<PlayerController>().SetControl();
         PlaCont.Add(pla.GetComponent<PlayerController>());

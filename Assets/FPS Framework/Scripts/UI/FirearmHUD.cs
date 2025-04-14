@@ -28,6 +28,8 @@ namespace Akila.FPSFramework
             {
                 return;
             }
+            if(SocketManager.Instance.player.userID!=GetComponentInParent<PlayerController>().player.userID)
+                return;
 
             gameObject.SetActive(firearm.isHudActive);
 

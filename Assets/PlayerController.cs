@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     public bool canMove = false;
 
     public Inventory inv;
+    //public Firearm firearm;
 
 
     private void OnEnable()

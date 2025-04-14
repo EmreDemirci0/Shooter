@@ -14,7 +14,9 @@ public class OnlinePlayerMovement
 [Serializable]
 public class Fire
 {
-    public string id;
+
+    public string roomID;
+    public string userID;
     public Vector3 firePosition = Vector3.zero;
     public Quaternion fireRotation = Quaternion.identity;
     public Vector3 fireDirection = Vector3.zero;

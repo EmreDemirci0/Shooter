@@ -31,7 +31,7 @@ namespace Akila.FPSFramework
 
         public InventoryCollectable ammoProfile { get; set; }
 
-        private Crosshair crosshair;
+        public Crosshair crosshair;
         /// <summary>
         /// Pattern for bullet spread when hip firing.
         /// </summary>
@@ -280,8 +280,9 @@ namespace Akila.FPSFramework
             }
             else
             {
-                firearmHUD = Instantiate(preset.firearmHud, transform);
+                    firearmHUD = Instantiate(preset.firearmHud, transform);
                 firearmHUD.firearm = this;
+                
             }
 
             if (preset.crosshair == null)
@@ -290,8 +291,11 @@ namespace Akila.FPSFramework
             }
             else
             {
+                if(SocketManager.Instance.player.userID!=GetComponentInParent<PlayerController>().player.userID)
+                return;
                 crosshair = Instantiate(preset.crosshair, firearmHUD.transform);
                 crosshair.firearm = this;
+                
             }
 
             // Initialize spray patterns, use a default if none is provided in the preset.
@@ -391,7 +395,8 @@ namespace Akila.FPSFramework
             }
 
             // Update input and movement
-            if (canMove)
+            if (!canMove)
+            return;
                 UpdateInput();
             AdjustPlayerSpeed();
 
@@ -705,13 +710,15 @@ namespace Akila.FPSFramework
             }
             Fire fi = new()
             {
-                id = SocketManager.Instance.player.userID,
+                roomID = SocketManager.Instance.player.roomID,
+                userID = SocketManager.Instance.player.userID,
                 fireDirection = fireDirection,
                 firePosition = firePosition,
                 fireRotation = fireRotation,
 
             };
-            SocketManager.Instance.socket.Emit("GetFire", fi);
+            string st=JsonUtility.ToJson(fi);
+            SocketManager.Instance.socket.Emit("GetFire", st);
             
 
 
@@ -726,15 +733,16 @@ namespace Akila.FPSFramework
         /// <param name="direction">The direction in which the projectile or hit scan will be fired.</param>
         public void Fire(Fire fire)//SetFire
         {
+
             // Exit if not ready to fire or fire timer has not elapsed
-            if (!readyToFire || Time.time <= fireTimer)
+            if ( Time.time <= fireTimer)
             {
                 return;
             }
 
             Vector3 finalDirection = Vector3.zero;
 
-            onFire?.Invoke(position, rotation, finalDirection);
+            onFire?.Invoke(fire.firePosition, fire.fireRotation, fire.fireDirection);
 
             // Update fire timer
             fireTimer = Time.time + 60f / preset.fireRate;
@@ -745,11 +753,12 @@ namespace Akila.FPSFramework
                 shotsFired = 0;
                 finalDirection = GetSprayPattern(fire.fireDirection);
 
-                FireDone(position, rotation, finalDirection);
+                FireDone(fire.firePosition, fire.fireRotation, finalDirection);
 
-                // Apply fire logic if not set to always apply fire
                 if (!preset.alwaysApplyFire)
                 {
+                    print("4");
+
                     ApplyFireOnce();
                 }
             }
@@ -1145,6 +1154,7 @@ namespace Akila.FPSFramework
             }
 
             // Instantiate the casing at the ejection port's position and rotation
+
             GameObject newCasing = Instantiate(preset.casing, casingEjectionPort.position, casingEjectionPort.rotation);
             Rigidbody casingRigidbody = newCasing.GetComponent<Rigidbody>();
 
@@ -1363,10 +1373,16 @@ namespace Akila.FPSFramework
         /// <returns>A <see cref="Vector3"/> representing the calculated spread pattern.</returns>
         public Vector3 GetSprayPattern(Vector3 direction)
         {
+            if(!aimDownSightsSprayPattern)
+            {
+                return direction;
+            }
             if (isAiming)
             {
+
                 return aimDownSightsSprayPattern.CalculatePattern(this, direction, currentSprayMultiplier, currentSprayAmount);
             }
+            print(aimDownSightsSprayPattern);
 
             return hipFireSprayPattern.CalculatePattern(this, direction, currentSprayMultiplier, currentSprayAmount);
         }
@@ -1413,24 +1429,7 @@ namespace Akila.FPSFramework
         {
             // Cancel any ongoing reload actions
             CancelReload();
-            SocketManager.Instance.socket.OnUnityThread("SetFire", data =>
-            {
-                Fire dat = JsonConvert.DeserializeObject<List<Fire>>(data.ToString())[0];
-                if (dat.id == SocketManager.Instance.player.userID)
-                {
-                    Fire(dat);
-
-                }
-            });
-            SocketManager.Instance.socket.OnUnityThread("SetReload", data =>
-            {
-                var dat = JsonConvert.DeserializeObject<List<string>>(data.ToString())[0];
-                if (dat == SocketManager.Instance.player.userID)
-                {
-                    Reload();
-
-                }
-            });
+            
         }
 
 
