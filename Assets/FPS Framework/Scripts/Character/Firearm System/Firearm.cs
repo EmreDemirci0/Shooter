@@ -10,7 +10,7 @@ namespace Akila.FPSFramework
     [RequireComponent(typeof(FirearmAttachmentsManager))]
     public class Firearm : InventoryItem
     {
-        public bool canMove;
+        public bool canMove=true;
         [Tooltip("The firearm preset that defines all values for this firearm. This preset is a ScriptableObject.")]
         public FirearmPreset preset;
 
