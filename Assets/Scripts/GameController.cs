@@ -3,6 +3,7 @@ using UnityEngine;
 using Unity.Mathematics;
 using Newtonsoft.Json;
 using System.Linq;
+using Akila.FPSFramework;
 
 public class GameController : MonoBehaviour
 {
@@ -16,6 +17,12 @@ public class GameController : MonoBehaviour
         foreach (var item in SocketManager.Instance.room.players)
         {
             GameObject pla = Instantiate(player, spawnPos.position, quaternion.identity);
+            pla.GetComponent<PlayerController>().player = item;
+            if(item.userID==SocketManager.Instance.player.userID)
+            {
+                 pla.GetComponent<PlayerController>().canMove = true;
+            }
+             pla.GetComponent<PlayerController>().SetControl();
             
         }
 

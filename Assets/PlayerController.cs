@@ -12,12 +12,12 @@ public class PlayerController : MonoBehaviour
     {
         SetControl();
     }
-    void SetControl()
+    public void SetControl()
     {
-        //GetComponent<FirstPersonController>().canControl = canMove;
-        //foreach (var item in GetComponentInChildren<Inventory>().items)
-        //{
-        //    item.gameObject.GetComponent<Firearm>().canMove = canMove;
-        //}
+        GetComponent<FirstPersonController>().canControl = canMove;
+        foreach (var item in GetComponentInChildren<Inventory>().items)
+        {
+            item.gameObject.GetComponent<Firearm>().canMove = canMove;
+        }
     }
 }

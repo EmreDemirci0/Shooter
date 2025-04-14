@@ -24,8 +24,8 @@ public class SocketManager : Singleton<SocketManager>
     public SocketIOUnity socket;
     public Player player;
     public Room room=new();
-    //string uri="http://185.242.161.111:3000";
-    string uri="http://localhost:1234";
+    string uri="http://185.242.161.111:3000";
+    //string uri="http://localhost:1234";
     void OnEnable()
     {
            socket = new SocketIOUnity(uri, new SocketIOOptions
