@@ -18,10 +18,10 @@ namespace Akila.FPSFramework
             Application.OpenURL("https://assetstore.unity.com/packages/templates/systems/fps-framework-217379");
         }
 
-        public void OpenDocs()
-        {
-            Application.OpenURL("https://akila.gitbook.io/fps-framework");
-        }
+        //public void OpenDocs()
+        //{
+        //    Application.OpenURL("https://akila.gitbook.io/fps-framework");
+        //}
 
         public void Quit()
         {
