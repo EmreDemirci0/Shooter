@@ -176,7 +176,6 @@ namespace Akila.FPSFramework
         
         protected void AddInputListner()
         {
-            Debug.Log("Girdi");
             //Sprint
             controls.Player.Sprint.performed += context =>
             {

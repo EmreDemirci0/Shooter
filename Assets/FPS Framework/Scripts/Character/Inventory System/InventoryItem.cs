@@ -271,7 +271,6 @@ namespace Akila.FPSFramework
         /// </summary>
         protected virtual void Update()
         {
-            Debug.Log("isAiming:" + isAiming);
             if (walkingWaveAnimationModifier != null)
             {
                 // Update walking wave animation based on character velocity

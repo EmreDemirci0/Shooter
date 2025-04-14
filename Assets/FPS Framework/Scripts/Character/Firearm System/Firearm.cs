@@ -418,8 +418,7 @@ namespace Akila.FPSFramework
             // Fire if in firing state
             if (isFiring)
             {
-                print("harbi ettti emitle burayı  ");
-                //
+                //Ateş etme
                 Fire();
             }
 
@@ -427,7 +426,6 @@ namespace Akila.FPSFramework
             {
                 if (aimingAnimation)
                 {
-                    Debug.Log("Buney 2"+ aimingAnimation.isPlaying);
                     characterManager.isAiming = aimingAnimation.isPlaying;
                     characterManager.attemptingToAim = aimingAnimation.velocity != 0;
                 }
@@ -557,7 +555,7 @@ namespace Akila.FPSFramework
 
             if (itemInput.ReloadInput)
             {
-                Debug.Log("MErmi değiltir");
+                //Mermi Değiştirdi.
                 Reload();
             }
 

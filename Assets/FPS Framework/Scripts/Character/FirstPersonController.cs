@@ -316,7 +316,7 @@ namespace Akila.FPSFramework
 
             if (canControl)
             {
-                Debug.Log("Hareket dettaylarý");
+                //Hareket
                 HandleMovement();
                 HandleJump();
                 HandleCameraLook();
@@ -376,7 +376,7 @@ namespace Akila.FPSFramework
         }
         private void HandleCameraLook()
         {
-            UpdateCameraRotation(); // Mevcut sistemde Q/E burada ayarlanýyor olabilir.
+            UpdateCameraRotation(); // Mevcut sistemde Q/E burada ayarlanï¿½yor olabilir.
         }
         private void HandleStepOffset()
         {

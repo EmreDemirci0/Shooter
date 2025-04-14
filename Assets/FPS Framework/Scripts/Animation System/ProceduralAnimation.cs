@@ -157,9 +157,16 @@ namespace Akila.FPSFramework.Animation
 
         public void Play(float fixedTime = -1)
         {
-            foreach(ProceduralAnimationConnection connection in connections)
+            //Animasyonlar
+            OnlinePlay(fixedTime);
+
+
+        }
+        public void OnlinePlay(float fixedTime = -1)
+        {
+            foreach (ProceduralAnimationConnection connection in connections)
             {
-                if(connection.target == null)
+                if (connection.target == null)
                 {
                     Debug.LogError($"[Procedural Animation] Connection's target reference is null or missing on {gameObject.name}. This instance will be ignored.", gameObject);
                 }
@@ -176,7 +183,6 @@ namespace Akila.FPSFramework.Animation
 
             events.OnPlay?.Invoke();
         }
-
         public void Pause()
         {
             isPaused = true;

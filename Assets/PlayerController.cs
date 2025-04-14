@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Player player;
-   public bool canMove = true;
+    public bool canMove = true;
 
     private void Start()
     {
