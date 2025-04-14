@@ -322,12 +322,13 @@ namespace Akila.FPSFramework
                 HandleMovement();
                 HandleJump();
                 HandleCameraLook();
+                MoveCharacter();
             }
 
             HandleStepOffset();
             ApplyCrouching();
             UpdateCameraPosition();
-            MoveCharacter();
+          
             MoveWithMovingPlatforms();
         }
         private void HandleMovement()
@@ -395,8 +396,7 @@ namespace Akila.FPSFramework
 
         private void MoveCharacter()
         {
-            if(!canControl)
-            return;
+
             CollisionFlags = controller.Move(velocity * Time.deltaTime);
             if(controller.velocity.magnitude > 0f)
             {
