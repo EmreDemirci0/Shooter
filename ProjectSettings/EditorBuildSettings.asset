@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Init.unity
     guid: 6450e2b8a4123ba47aa2f3e20d45799e
   - enabled: 1
-    path: Assets/Scenes/Main Menu.unity
+    path: Assets/Scenes/Main Menu old.unity
     guid: ac101b9ed944cf947b30259ece7eb5aa
   - enabled: 1
     path: Assets/Scenes/Demo.unity
@@ -21,7 +21,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 36fdf508bfd033140829a46d4c93424a
   - enabled: 1
-    path: Assets/Scenes/Didem Main Menu.unity
+    path: Assets/Scenes/Main Menu.unity
     guid: 62ba981a3b739104d8a4cfea266876d5
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: fe0ad163545f89b47813a7b41af4a66a,

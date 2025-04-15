@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8a0a4087aea3941a57b9104c05a729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Didem Main Menu
+  nextSceneName: Main Menu
 --- !u!4 &949052888
 Transform:
   m_ObjectHideFlags: 0
