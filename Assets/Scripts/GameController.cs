@@ -13,14 +13,17 @@ public class GameController : MonoBehaviour
 
     public List<PlayerController> PlaCont;
 
-    
+
     private void OnEnable()
     {
         SocketManager.Instance.socket.OnUnityThread("SetPlayerMove", data =>
             {
                 var pla = JsonConvert.DeserializeObject<List<Player>>(data.ToString())[0];
                 var den = PlaCont.FirstOrDefault(x => x.player.userID == pla.userID);
-
+                if (den == null || den.gameObject == null)
+                {
+                    return; // Eğer null veya silinmişse işlemi durdur
+                }
                 if (den.player.userID != SocketManager.Instance.player.userID)
                 {
                     den.gameObject.transform.position = pla.pos;
@@ -28,20 +31,19 @@ public class GameController : MonoBehaviour
                 den.GetComponent<FirstPersonController>().SetRotaitonSoceket(pla.rotate.x, pla.rotate.y);
 
             });
-        SocketManager.Instance.socket.OnUnityThread("SetFire", data =>{
-            print("giriyorr ");
-                var fire = JsonConvert.DeserializeObject<List<Fire>>(data.ToString())[0];
-                var pla = PlaCont.FirstOrDefault(x => x.player.userID == fire.userID);
-                pla.inv.GetComponentInChildren<Firearm>().Fire(fire);
+        SocketManager.Instance.socket.OnUnityThread("SetFire", data =>
+        {
+            var fire = JsonConvert.DeserializeObject<List<Fire>>(data.ToString())[0];
+            var pla = PlaCont.FirstOrDefault(x => x.player.userID == fire.userID);
+            pla.inv.GetComponentInChildren<Firearm>().Fire(fire);
         });
-            SocketManager.Instance.socket.OnUnityThread("SetReload", data =>
-            {
-                var dat = JsonConvert.DeserializeObject<List<string>>(data.ToString())[0];
-                if (dat == SocketManager.Instance.player.userID)
-                {
+        SocketManager.Instance.socket.OnUnityThread("SetReload", data =>
+        {
+            var fire = JsonConvert.DeserializeObject<List<string>>(data.ToString())[0];
+            var pla = PlaCont.FirstOrDefault(x => x.player.userID == fire);
+            pla.inv.GetComponentInChildren<Firearm>().Reload();
+        });
 
-                }
-            });
     }
     void Start()
     {
@@ -89,16 +91,16 @@ public class GameController : MonoBehaviour
     {
         GameObject pla = Instantiate(player, spawnPos.position, quaternion.identity);
         pla.GetComponent<PlayerController>().player = item;
+
         if (item.userID == SocketManager.Instance.player.userID)
         {
             pla.GetComponent<PlayerController>().canMove = true;
             pla.GetComponentInChildren<CameraManager>().mainCamera.enabled = true;
             pla.GetComponentInChildren<CameraManager>().mainCamera.GetComponent<AudioListener>().enabled = true;
             pla.GetComponentInChildren<CameraManager>().overlayCamera.enabled = true;
-            pla.GetComponentInChildren<InteractionsManager>().HUDObject.SetActive(true);
-            
-        }
 
+
+        }
         pla.name = item.PlaName;
 
         pla.GetComponent<PlayerController>().SetControl();

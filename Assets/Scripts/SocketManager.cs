@@ -6,7 +6,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [Serializable]
-public class Player{
+public class Player
+{
 
     public string PlaName;
     public string socketID;
@@ -16,7 +17,8 @@ public class Player{
     public Vector3 rotate;
 }
 [Serializable]
-public class Room{
+public class Room
+{
     public string roomID;
     public List<Player> players;
 }
@@ -25,31 +27,33 @@ public class SocketManager : Singleton<SocketManager>
 {
     public SocketIOUnity socket;
     public Player player;
-    public Room room=new();
-    //string uri="http://185.242.161.111:1234";
-    string uri="http://localhost:1234";
+    public Room room = new();
+    string uri = "http://185.242.161.111:1234";
+    //string uri="http://localhost:1234";
     void OnEnable()
     {
-           socket = new SocketIOUnity(uri, new SocketIOOptions
-    {
-        Query = new Dictionary<string, string> { { "token", "UNITY" } }
-    });
-    socket.OnConnected += (s, e) =>{
-        socket.Emit("test","sa");
-    };
+        socket = new SocketIOUnity(uri, new SocketIOOptions
+        {
+            Query = new Dictionary<string, string> { { "token", "UNITY" } }
+        });
+        socket.OnConnected += (s, e) =>
+        {
+            socket.Emit("test", "sa");
+        };
 
-    
 
-    socket.OnDisconnected += (sender, e) =>
-    {
-        Debug.Log("Socket.IO disconnected.");
-    };
 
-    socket.Connect();
+        socket.OnDisconnected += (sender, e) =>
+        {
+            Debug.Log("Socket.IO disconnected.");
+        };
+
+        socket.Connect();
     }
 
 
-    private void OnApplicationQuit() {
+    private void OnApplicationQuit()
+    {
         socket.Disconnect();
     }
 }

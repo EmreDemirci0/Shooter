@@ -280,8 +280,13 @@ namespace Akila.FPSFramework
             }
             else
             {
-                    firearmHUD = Instantiate(preset.firearmHud, transform);
+                if(SocketManager.Instance.player.userID==GetComponentInParent<PlayerController>().player.userID)
+                {
+firearmHUD = Instantiate(preset.firearmHud, transform);
                 firearmHUD.firearm = this;
+                }
+                
+                    
                 
             }
 
@@ -563,8 +568,6 @@ namespace Akila.FPSFramework
 
             if (itemInput.ReloadInput)
             {
-                //Mermi Değiştirdi.
-                //Reload();
                 SocketManager.Instance.socket.Emit("GetReload", SocketManager.Instance.socket.Id);
             }
 
@@ -1223,7 +1226,6 @@ namespace Akila.FPSFramework
             {
                 return;
             }
-
             // Check if there is ammo available to reload
             if (ammoProfile.count > 0)
             {
@@ -1258,6 +1260,7 @@ namespace Akila.FPSFramework
             {
                 foreach (var animator in animators)
                 {
+
                     animator.CrossFade(preset.reloadStateName, preset.reloadTransitionTime, 0, 0f);
                 }
 
@@ -1375,15 +1378,13 @@ namespace Akila.FPSFramework
         {
             if(!aimDownSightsSprayPattern)
             {
-                return direction;
+                hipFireSprayPattern = ScriptableObject.CreateInstance<SprayPattern>();
             }
             if (isAiming)
             {
 
                 return aimDownSightsSprayPattern.CalculatePattern(this, direction, currentSprayMultiplier, currentSprayAmount);
             }
-            print(aimDownSightsSprayPattern);
-
             return hipFireSprayPattern.CalculatePattern(this, direction, currentSprayMultiplier, currentSprayAmount);
         }
 

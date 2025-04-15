@@ -98,7 +98,7 @@ namespace Akila.FPSFramework.Animation
 
         private void OnEnable()
         {
-            if(playOnAwake == true)
+            if (playOnAwake == true)
             {
                 Play(0);
             }
@@ -119,13 +119,17 @@ namespace Akila.FPSFramework.Animation
             //Handles the custom events and progress for this animation.
             HandleEvents();
 
-            if(triggerType == TriggerType.Hold)
+            if (triggerType == TriggerType.Hold)
             {
-                if (triggerInputAction.IsPressed()) Play();
+                if (triggerInputAction.IsPressed())
+                {
+                    print(triggerType);
+                    //Play();
+                }
                 else Stop();
             }
 
-            if(triggerType == TriggerType.Tab)
+            if (triggerType == TriggerType.Tab)
             {
                 if (triggerInputAction.triggered) isTrigged = !isTrigged;
 
@@ -133,7 +137,7 @@ namespace Akila.FPSFramework.Animation
                 else Stop();
             }
 
-            if(triggerType == TriggerType.DoubleTab)
+            if (triggerType == TriggerType.DoubleTab)
             {
                 triggerInputAction.HasDoupleClicked(ref isTrigged, ref lastTriggerTime, 0.3f);
 
@@ -144,12 +148,12 @@ namespace Akila.FPSFramework.Animation
             if (!isPaused)
                 UpdateProgress();
 
-            if(loop && progress >= 0.999f)
+            if (loop && progress >= 0.999f)
             {
                 progress = 0;
             }
 
-            if(autoStop && progress >= 0.999f || HasToAvoid())
+            if (autoStop && progress >= 0.999f || HasToAvoid())
             {
                 Stop();
             }
@@ -202,7 +206,7 @@ namespace Akila.FPSFramework.Animation
             if (isPlaying)
                 progress = Mathf.SmoothDamp(progress, 1, ref currentVelocity, length / masterSpeed);
 
-            if(!isPlaying || HasToAvoid())
+            if (!isPlaying || HasToAvoid())
                 progress = Mathf.SmoothDamp(progress, 0, ref currentVelocity, length / masterSpeed);
         }
 
@@ -210,12 +214,12 @@ namespace Akila.FPSFramework.Animation
 
         private void HandleEvents()
         {
-            if(isPlaying && !prevPlaying)
+            if (isPlaying && !prevPlaying)
             {
                 events.OnPlayed?.Invoke();
             }
 
-            if(!isPlaying && prevPlaying)
+            if (!isPlaying && prevPlaying)
             {
                 events.OnStoped?.Invoke();
             }
@@ -262,7 +266,7 @@ namespace Akila.FPSFramework.Animation
 
         public float GetAvoidanceFactor(ProceduralAnimation animation)
         {
-            if(animation == null) return 0f;
+            if (animation == null) return 0f;
 
             return Mathf.Lerp(1, 0, animation.progress);
         }
