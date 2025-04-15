@@ -28,10 +28,12 @@ public class SocketManager : Singleton<SocketManager>
     public SocketIOUnity socket;
     public Player player;
     public Room room = new();
+    private System.Diagnostics.Stopwatch pingStopwatch; // Ping ölçmek için zamanlayıcı
+    public float currentPing;
 
     string uri = "http://185.242.161.111:1234";// server 
     //string uri = "http://10.20.48.179:1234";// LAN server
-    //string uri="http://localhost:1234"; // locak
+    //string uri = "http://localhost:1234"; // locak
 
     void OnEnable()
     {
@@ -41,8 +43,19 @@ public class SocketManager : Singleton<SocketManager>
         });
         socket.OnConnected += (s, e) =>
         {
-            socket.Emit("test", "sa");
+
         };
+        socket.OnUnityThread("pong", response =>
+       {
+           // Sunucudan gelen "pong" cevabını işleyin
+           if (pingStopwatch != null && pingStopwatch.IsRunning)
+           {
+               pingStopwatch.Stop();
+               currentPing = pingStopwatch.ElapsedMilliseconds; // Ping değerini milisaniye olarak al
+               Debug.Log($"Ping: {currentPing} ms");
+           }
+       });
+        StartCoroutine(SendPing());
 
 
 
@@ -54,7 +67,19 @@ public class SocketManager : Singleton<SocketManager>
         socket.Connect();
     }
 
-
+    private IEnumerator SendPing()
+    {
+        while (true)
+        {
+            if (socket.Connected)
+            {
+                pingStopwatch = System.Diagnostics.Stopwatch.StartNew(); // Zamanlayıcıyı başlat
+                socket.Emit("ping"); // Sunucuya "ping" gönder
+                print("ping");
+            }
+            yield return new WaitForSeconds(1); // Her 5 saniyede bir ping gönder
+        }
+    }
     private void OnApplicationQuit()
     {
         socket.Disconnect();
