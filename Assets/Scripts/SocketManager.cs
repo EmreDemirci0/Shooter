@@ -52,7 +52,6 @@ public class SocketManager : Singleton<SocketManager>
            {
                pingStopwatch.Stop();
                currentPing = pingStopwatch.ElapsedMilliseconds; // Ping değerini milisaniye olarak al
-               Debug.Log($"Ping: {currentPing} ms");
            }
        });
         StartCoroutine(SendPing());
@@ -66,7 +65,11 @@ public class SocketManager : Singleton<SocketManager>
 
         socket.Connect();
     }
-
+    private void OnGUI()
+    {
+        // Ping değerini ekrana yazdır
+        GUI.Label(new Rect(10, 10, 200, 20), $"Ping: {currentPing} ms");
+    }
     private IEnumerator SendPing()
     {
         while (true)
