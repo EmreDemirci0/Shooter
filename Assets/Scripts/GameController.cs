@@ -17,6 +17,8 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
+        string js = JsonUtility.ToJson(SocketManager.Instance.room);
+        SocketManager.Instance.socket.Emit("CreatedRoom", js);
         SocketManager.Instance.socket.OnUnityThread("SetPlayerMove", data =>
             {
                 var pla = JsonConvert.DeserializeObject<List<Player>>(data.ToString())[0];

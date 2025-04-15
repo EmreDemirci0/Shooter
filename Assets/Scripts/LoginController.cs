@@ -12,10 +12,22 @@ public class LoginController : MonoBehaviour
 
     void Start()
     {
+        Player pla = new()
+        {
+            socketID = SocketManager.Instance.socket.Id,
+            userID = SocketManager.Instance.socket.Id,
+            PlaName = nameInput.text,
+            roomID = "test"
+        };
+        SocketManager.Instance.player = pla;
+        string js = JsonUtility.ToJson(pla);
+        SocketManager.Instance.socket.Emit("SetPla", js);
+
         SocketManager.Instance.socket.OnUnityThread("JoinRooms", rooms =>
         {
             var room = JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
             SocketManager.Instance.room = room;
+            SocketManager.Instance.player.roomID = room.roomID;
             SceneManager.LoadScene("Game");
 
         });
@@ -23,24 +35,17 @@ public class LoginController : MonoBehaviour
 
     public void CreateRoom()
     {
-        SocketManager.Instance.socket.Emit("CreateRoom", SocketManager.Instance.player.userID);
+        if (!string.IsNullOrEmpty(nameInput.text))
+        {
+
+            SocketManager.Instance.socket.Emit("CreateRoom", nameInput.text);
+
+        }
+
     }
 
     public void Play()
     {
-        if (!string.IsNullOrEmpty(nameInput.text))
-        {
-            Player pla = new()
-            {
-                socketID = SocketManager.Instance.socket.Id,
-                userID = SocketManager.Instance.socket.Id,
-                PlaName = nameInput.text,
-                roomID = "test"
-            };
-            SocketManager.Instance.player = pla;
-            string js = JsonUtility.ToJson(pla);
-            SocketManager.Instance.socket.Emit("SetPla", js);
-        }
 
     }
 }
