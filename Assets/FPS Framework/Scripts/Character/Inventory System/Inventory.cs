@@ -70,6 +70,7 @@ namespace Akila.FPSFramework
 
                 foreach (InventoryItem item in GetComponentsInChildren<InventoryItem>())
                 {
+                    if (!item) return;
                     InventoryItem newItem = Instantiate(item, transform);
 
                     Destroy(item.gameObject);

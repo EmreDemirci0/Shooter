@@ -107,25 +107,25 @@ namespace Akila.FPSFramework.Animation
         private void Start()
         {
             GetComponentInParent<ProceduralAnimator>().RefreshClips();
+            player = GetComponentInParent<PlayerController>();
+
         }
 
         bool isTriggred;
         float lastTriggerTime;
-
+        public PlayerController player;
         private void Update()
         {
             if (isActive == false) return;
-
-            //Handles the custom events and progress for this animation.
+            if (player.player.userID != SocketManager.Instance.player.userID) return;
             HandleEvents();
+
 
             if (triggerType == TriggerType.Hold)
             {
                 if (triggerInputAction.IsPressed())
                 {
-                    print(triggerType);
-                    //SocketManager.Instance
-                    //Play();
+                    Play();
                 }
                 else Stop();
             }
@@ -163,9 +163,11 @@ namespace Akila.FPSFramework.Animation
         public void Play(float fixedTime = -1)
         {
             //Animasyonlar
+            /*SocketManager.Instance.player.animType = Name;
+            string js = JsonUtility.ToJson(SocketManager.Instance.player);
+            SocketManager.Instance.socket.Emit("GetAnim", js);*/
+            if (player?.player.userID != SocketManager.Instance.player.userID) return;
             OnlinePlay(fixedTime);
-
-
         }
         public void OnlinePlay(float fixedTime = -1)
         {

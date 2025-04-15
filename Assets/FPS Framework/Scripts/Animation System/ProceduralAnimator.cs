@@ -106,13 +106,13 @@ namespace Akila.FPSFramework.Animation
         public List<ProceduralAnimation> clips = new List<ProceduralAnimation>();
 
         public Vector3 defaultPosition { get; protected set; }
-        public Vector3 defaultRotation {  get; protected set; }
-        
+        public Vector3 defaultRotation { get; protected set; }
+
         public bool IsDefaultingInPosition(Vector3 tolerance, bool x = true, bool y = true, bool z = true)
         {
             Vector3 positionDifference = targetPosition - defaultPosition;
 
-            if (positionDifference.x > tolerance.x && x || positionDifference.y > tolerance.y && y || positionDifference.z > tolerance.z && z) 
+            if (positionDifference.x > tolerance.x && x || positionDifference.y > tolerance.y && y || positionDifference.z > tolerance.z && z)
                 return false;
 
             return true;
@@ -134,7 +134,7 @@ namespace Akila.FPSFramework.Animation
             defaultPosition = transform.localPosition;
             defaultRotation = transform.localEulerAngles;
 
-            if(animationsHolder == null)
+            if (animationsHolder == null)
             {
                 animationsHolder = gameObject;
 
@@ -179,7 +179,6 @@ namespace Akila.FPSFramework.Animation
         public void Play(string name)
         {
             ProceduralAnimation animation = GetAnimation(name);
-
             animation.Play();
         }
 

@@ -4,6 +4,7 @@ using Unity.Mathematics;
 using Newtonsoft.Json;
 using System.Linq;
 using Akila.FPSFramework;
+using Akila.FPSFramework.Animation;
 
 public class GameController : MonoBehaviour
 {
@@ -36,6 +37,12 @@ public class GameController : MonoBehaviour
             var fire = JsonConvert.DeserializeObject<List<Fire>>(data.ToString())[0];
             var pla = PlaCont.FirstOrDefault(x => x.player.userID == fire.userID);
             pla.inv.GetComponentInChildren<Firearm>().Fire(fire);
+        });
+        SocketManager.Instance.socket.OnUnityThread("SetAnim", data =>
+        {
+            var fire = JsonConvert.DeserializeObject<List<Player>>(data.ToString())[0];
+            var pla = PlaCont.FirstOrDefault(x => x.player.userID == fire.userID);
+            pla.inv.items[pla.inv.currentItemIndex].GetComponentInChildren<ProceduralAnimator>().Play(fire.animType);
         });
         SocketManager.Instance.socket.OnUnityThread("SetReload", data =>
         {

@@ -280,14 +280,14 @@ namespace Akila.FPSFramework
             }
             else
             {
-                if(SocketManager.Instance.player.userID==GetComponentInParent<PlayerController>().player.userID)
+                if (SocketManager.Instance.player.userID == GetComponentInParent<PlayerController>().player.userID)
                 {
-firearmHUD = Instantiate(preset.firearmHud, transform);
-                firearmHUD.firearm = this;
+                    firearmHUD = Instantiate(preset.firearmHud, transform);
+                    firearmHUD.firearm = this;
                 }
-                
-                    
-                
+
+
+
             }
 
             if (preset.crosshair == null)
@@ -296,11 +296,11 @@ firearmHUD = Instantiate(preset.firearmHud, transform);
             }
             else
             {
-                if(SocketManager.Instance.player.userID!=GetComponentInParent<PlayerController>().player.userID)
-                return;
+                if (SocketManager.Instance.player.userID != GetComponentInParent<PlayerController>().player.userID)
+                    return;
                 crosshair = Instantiate(preset.crosshair, firearmHUD.transform);
                 crosshair.firearm = this;
-                
+
             }
 
             // Initialize spray patterns, use a default if none is provided in the preset.
@@ -401,8 +401,8 @@ firearmHUD = Instantiate(preset.firearmHud, transform);
 
             // Update input and movement
             if (!canMove)
-            return;
-                UpdateInput();
+                return;
+            UpdateInput();
             AdjustPlayerSpeed();
 
             // Stop reloading if magazine is full and reload method is scripted
@@ -720,9 +720,9 @@ firearmHUD = Instantiate(preset.firearmHud, transform);
                 fireRotation = fireRotation,
 
             };
-            string st=JsonUtility.ToJson(fi);
+            string st = JsonUtility.ToJson(fi);
             SocketManager.Instance.socket.Emit("GetFire", st);
-            
+
 
 
 
@@ -738,7 +738,7 @@ firearmHUD = Instantiate(preset.firearmHud, transform);
         {
 
             // Exit if not ready to fire or fire timer has not elapsed
-            if ( Time.time <= fireTimer)
+            if (Time.time <= fireTimer)
             {
                 return;
             }
@@ -755,13 +755,10 @@ firearmHUD = Instantiate(preset.firearmHud, transform);
             {
                 shotsFired = 0;
                 finalDirection = GetSprayPattern(fire.fireDirection);
-
                 FireDone(fire.firePosition, fire.fireRotation, finalDirection);
 
                 if (!preset.alwaysApplyFire)
                 {
-                    print("4");
-
                     ApplyFireOnce();
                 }
             }
@@ -1376,7 +1373,7 @@ firearmHUD = Instantiate(preset.firearmHud, transform);
         /// <returns>A <see cref="Vector3"/> representing the calculated spread pattern.</returns>
         public Vector3 GetSprayPattern(Vector3 direction)
         {
-            if(!aimDownSightsSprayPattern)
+            if (!aimDownSightsSprayPattern)
             {
                 hipFireSprayPattern = ScriptableObject.CreateInstance<SprayPattern>();
             }
@@ -1430,7 +1427,7 @@ firearmHUD = Instantiate(preset.firearmHud, transform);
         {
             // Cancel any ongoing reload actions
             CancelReload();
-            
+
         }
 
 
