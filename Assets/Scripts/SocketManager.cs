@@ -31,8 +31,8 @@ public class SocketManager : Singleton<SocketManager>
     private System.Diagnostics.Stopwatch pingStopwatch; // Ping ölçmek için zamanlayıcı
     public float currentPing;
 
-    string uri = "http://185.242.161.111:1234";// server 
-    //string uri = "http://10.20.48.179:1234";// LAN server
+    //string uri = "http://185.242.161.111:1234";// server 
+    string uri = "http://10.20.48.179:1234";// LAN server
     //string uri = "http://localhost:1234"; // locak
 
     void OnEnable()
