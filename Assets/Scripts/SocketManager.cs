@@ -29,8 +29,8 @@ public class SocketManager : Singleton<SocketManager>
     public Player player;
     public Room room = new();
 
-    //string uri = "http://185.242.161.111:1234";// server 
-    string uri = "http://10.20.48.179:1234";// LAN server
+    string uri = "http://185.242.161.111:1234";// server 
+    //string uri = "http://10.20.48.179:1234";// LAN server
     //string uri="http://localhost:1234"; // locak
 
     void OnEnable()
