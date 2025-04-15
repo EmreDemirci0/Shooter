@@ -8,44 +8,63 @@ using UnityEngine.SceneManagement;
 
 public class LoginController : MonoBehaviour
 {
-    public TMP_InputField nameInput;
+	public TMP_InputField nameInput;
+	public JoinRoomController joinRoomPrefab;
+	public Transform container;
 
-    void Start()
-    {
-        Player pla = new()
-        {
-            socketID = SocketManager.Instance.socket.Id,
-            userID = SocketManager.Instance.socket.Id,
-            PlaName = nameInput.text,
-            roomID = "test"
-        };
-        SocketManager.Instance.player = pla;
-        string js = JsonUtility.ToJson(pla);
-        SocketManager.Instance.socket.Emit("SetPla", js);
+	void Start()
+	{
+		Player pla = new()
+		{
+			socketID = SocketManager.Instance.socket.Id,
+			userID = SocketManager.Instance.socket.Id,
+			PlaName = nameInput.text,
+			roomID = "test"
+		};
+		SocketManager.Instance.player = pla;
+		string js = JsonUtility.ToJson(pla);
+		SocketManager.Instance.socket.Emit("SetPla", js);
 
-        SocketManager.Instance.socket.OnUnityThread("JoinRooms", rooms =>
-        {
-            var room = JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
-            SocketManager.Instance.room = room;
-            SocketManager.Instance.player.roomID = room.roomID;
-            SceneManager.LoadScene("Game");
+		SocketManager.Instance.socket.OnUnityThread("JoinRooms", rooms =>
+		{
+			var room = JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
+			SocketManager.Instance.room = room;
+			SocketManager.Instance.player.roomID = room.roomID;
+			SceneManager.LoadScene("Game");
 
-        });
-    }
+		});
 
-    public void CreateRoom()
-    {
-        if (!string.IsNullOrEmpty(nameInput.text))
-        {
 
-            SocketManager.Instance.socket.Emit("CreateRoom", nameInput.text);
+		SocketManager.Instance.socket.OnUnityThread("Rooms", rooms =>
+		{
+			var room = JsonConvert.DeserializeObject<List<List<Room>>>(rooms.ToString())[0];
+			for (int i = 0; i < container.childCount; i++)
+			{
+				Destroy(container.GetChild(i).gameObject);
 
-        }
+			}
+			foreach (var item in room)
+			{
+				JoinRoomController joinRoomController= Instantiate(joinRoomPrefab,container);
+				joinRoomController.SetInfo(item);
+			}
+		
+		});
+	}
 
-    }
+	public void CreateRoom()
+	{
+		if (!string.IsNullOrEmpty(nameInput.text))
+		{
 
-    public void Play()
-    {
+			SocketManager.Instance.socket.Emit("CreateRoom", nameInput.text);
 
-    }
+		}
+
+	}
+
+	public void Play()
+	{
+
+	}
 }
