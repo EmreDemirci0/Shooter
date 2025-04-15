@@ -124,6 +124,7 @@ namespace Akila.FPSFramework.Animation
                 if (triggerInputAction.IsPressed())
                 {
                     print(triggerType);
+                    //SocketManager.Instance
                     //Play();
                 }
                 else Stop();
