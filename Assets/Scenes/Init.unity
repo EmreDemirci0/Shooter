@@ -172,9 +172,11 @@ MonoBehaviour:
     userID: 
     roomID: 
     pos: {x: 0, y: 0, z: 0}
+    rotate: {x: 0, y: 0, z: 0}
   room:
     roomID: 
     players: []
+  currentPing: 0
 --- !u!1 &949052886
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,6 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8a0a4087aea3941a57b9104c05a729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextSceneName: Didem Main Menu
 --- !u!4 &949052888
 Transform:
   m_ObjectHideFlags: 0
