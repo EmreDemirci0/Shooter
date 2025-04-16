@@ -84,11 +84,10 @@ namespace Akila.FPSFramework
             IInventory inventory = source.Inventory;
 
             InventoryItem newItem = Instantiate(item, inventory.transform);
-            print(newItem.gameObject.name);
+            print(item.gameObject.name);
             inventory.items = inventory.transform.GetComponentsInChildren<InventoryItem>(true).ToList();
 
             int index = inventory.items.IndexOf(newItem);
-            gun.index = index;
 
             if (inventory.items.Count > inventory.maxSlots)
             {
@@ -99,9 +98,9 @@ namespace Akila.FPSFramework
 
                 index = inventory.items.Count - 1;
             }
-
             index = Mathf.Clamp(index, 0, inventory.maxSlots - 1);
-            inventory.Switch(index);
+            gun.index = index;
+
             string js = JsonUtility.ToJson(gun);
             SocketManager.Instance.socket.Emit("TakeGun", js);
 

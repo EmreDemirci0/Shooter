@@ -693,7 +693,6 @@ Transform:
   m_Children:
   - {fileID: 5659229632663157830}
   - {fileID: 3631930880845664281}
-  - {fileID: 3744218211206698954}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2372615944575434604
@@ -1027,7 +1026,7 @@ MonoBehaviour:
     rotate: {x: 0, y: 0, z: 0}
     animType: 
     isCam: 0
-  canMove: 1
+  canMove: 0
   inv: {fileID: 5949840488172601449}
   NameText: {fileID: 4161281583748202295}
 --- !u!1 &1928016188355849686
@@ -1106,16 +1105,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3103249333662332038}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: -0.3}
   m_LocalScale: {x: 0.10904, y: 0.10904, z: 0.10904}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4759831949880717634}
+  m_Father: {fileID: 7760894669615185463}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.008853991, y: 1.503}
+  m_AnchoredPosition: {x: 0.008853991, y: 0.70300007}
   m_SizeDelta: {x: 20, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!23 &3755103125650669924
@@ -1865,7 +1864,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startItems:
-  - {fileID: -7770503669698727024, guid: bbabec215dfafb844b5dfd983988a7d0, type: 3}
   - {fileID: 1069960484613499420, guid: b59bdbe3ae563544c9c624ef3653f87f, type: 3}
   items: []
   collectables:
@@ -1945,6 +1943,7 @@ Transform:
   - {fileID: 8536869849331546920}
   - {fileID: 9209645016585395115}
   - {fileID: 6731030880984631252}
+  - {fileID: 3744218211206698954}
   m_Father: {fileID: 32892170189242124}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8607082870692960567

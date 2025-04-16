@@ -48,6 +48,8 @@ namespace Akila.FPSFramework
         public InventoryItem currentDefaultItem { get => _defaultItem; set => _defaultItem = value; }
         List<InventoryCollectable> IInventory.collectables { get => collectables; }
 
+        public bool canMove;
+
         private void Start()
         {
             if (items.Count > 0)
@@ -66,6 +68,8 @@ namespace Akila.FPSFramework
                 foreach (InventoryItem startItem in startItems)
                 {
                     InventoryItem newItem = Instantiate(startItem, transform);
+                    /*newItem.replacement.gun.userID = SocketManager.Instance.player.userID;
+                    newItem.replacement.gun.index = items.Count;*/
                 }
 
                 foreach (InventoryItem item in GetComponentsInChildren<InventoryItem>())
@@ -88,6 +92,7 @@ namespace Akila.FPSFramework
 
         private void Update()
         {
+            if (!canMove) return;
             GetInput();
 
             //Ensure the item index wraps around correctly, staying within the bounds of the list
@@ -119,16 +124,42 @@ namespace Akila.FPSFramework
         private void GetInput()
         {
             if (!isInputActive) return;
-
-            if (characterInput.controls.Player.Item1.triggered) currentItemIndex = 0;
-            if (characterInput.controls.Player.Item2.triggered && items.Count >= 2) currentItemIndex = 1;
-            if (characterInput.controls.Player.Item3.triggered && items.Count >= 3) currentItemIndex = 2;
-            if (characterInput.controls.Player.Item4.triggered && items.Count >= 4) currentItemIndex = 3;
-            if (characterInput.controls.Player.Item5.triggered && items.Count >= 5) currentItemIndex = 4;
-            if (characterInput.controls.Player.Item6.triggered && items.Count >= 6) currentItemIndex = 5;
-            if (characterInput.controls.Player.Item7.triggered && items.Count >= 7) currentItemIndex = 6;
-            if (characterInput.controls.Player.Item8.triggered && items.Count >= 8) currentItemIndex = 7;
-            if (characterInput.controls.Player.Item9.triggered && items.Count >= 9) currentItemIndex = 8;
+            if (characterInput.controls.Player.Item1.triggered)
+            {
+                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+            }
+            if (characterInput.controls.Player.Item2.triggered && items.Count >= 2)
+            {
+                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+            }
+            if (characterInput.controls.Player.Item3.triggered && items.Count >= 3)
+            {
+                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+            }
+            if (characterInput.controls.Player.Item4.triggered && items.Count >= 4)
+            {
+                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+            }
+            if (characterInput.controls.Player.Item5.triggered && items.Count >= 5)
+            {
+                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+            }
+            if (characterInput.controls.Player.Item6.triggered && items.Count >= 6)
+            {
+                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+            }
+            if (characterInput.controls.Player.Item7.triggered && items.Count >= 7)
+            {
+                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+            }
+            if (characterInput.controls.Player.Item8.triggered && items.Count >= 8)
+            {
+                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+            }
+            if (characterInput.controls.Player.Item9.triggered && items.Count >= 9)
+            {
+                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+            }
 
             if (characterInput.controls.Player.SwitchItem.ReadValue<float>() > 0) currentItemIndex++;
 

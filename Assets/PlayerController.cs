@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public void SetControl()
     {
         GetComponent<FirstPersonController>().canControl = canMove;
+        inv.canMove = canMove;
     }
     void Update()
     {

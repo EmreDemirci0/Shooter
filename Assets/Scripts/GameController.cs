@@ -21,7 +21,6 @@ public class GameController : MonoBehaviour
     public List<Transform> GunPos;
 
 
-
     private void OnEnable()
     {
         string js = JsonUtility.ToJson(SocketManager.Instance.room);
@@ -71,7 +70,12 @@ public class GameController : MonoBehaviour
             var gun = JsonConvert.DeserializeObject<List<Gun>>(data.ToString())[0];
             var pla = PlaConts.FirstOrDefault(x => x.player.userID == gun.userID);
             GameObject gam = Items.FirstOrDefault(x => x.gun.gunID == gun.gunID).gameObject;
-            pla.inv.Switch(gun.index);
+            if (gam == null)
+            {
+                return; // Eğer null veya silinmişse işlemi durdur
+            }
+            print(pla.gameObject.name + " " + gun.gunID + " " + gun.index);
+            pla.inv.Switch(gun.index - 1);
             Destroy(gam);
 
         });
@@ -110,8 +114,8 @@ public class GameController : MonoBehaviour
     {
         for (int i = 0; i < GunPos.Count; i++)
         {
-            var gun = Instantiate(Guns[1], GunPos[i].position, quaternion.identity);
-            gun.gun.gunID = i.ToString();
+            var gun = Instantiate(Guns[i % Guns.Count], GunPos[i].position, quaternion.identity);
+            gun.gun.gunID = (i + 1).ToString();
             Items.Add(gun);
         }
 

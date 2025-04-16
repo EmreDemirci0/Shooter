@@ -104,7 +104,7 @@ namespace Akila.FPSFramework
         {
             get
             {
-                if(FPSFrameworkCore.GetActiveControlScheme() == ControlScheme.Gamepad)
+                if (FPSFrameworkCore.GetActiveControlScheme() == ControlScheme.Gamepad)
                 {
                     return sensitivityOnGamepad;
                 }
@@ -179,7 +179,7 @@ namespace Akila.FPSFramework
 
         private void OnEnable()
         {
-            
+
             footStepsAudio.Clear();
 
             foreach (AudioProfile profile in footstepsSFX)
@@ -323,13 +323,14 @@ namespace Akila.FPSFramework
                 HandleJump();
                 HandleCameraLook();
                 MoveCharacter();
+                HandleStepOffset();
+                ApplyCrouching();
+                UpdateCameraPosition();
+
+                MoveWithMovingPlatforms();
             }
 
-            HandleStepOffset();
-            ApplyCrouching();
-            UpdateCameraPosition();
-          
-            MoveWithMovingPlatforms();
+
         }
         private void HandleMovement()
         {
@@ -398,14 +399,14 @@ namespace Akila.FPSFramework
         {
 
             CollisionFlags = controller.Move(velocity * Time.deltaTime);
-            if(controller.velocity.magnitude > 0f)
+            if (controller.velocity.magnitude > 0f)
             {
                 //hareket emitle 
                 SocketManager.Instance.player.pos = transform.position;
-                string js=JsonUtility.ToJson(SocketManager.Instance.player);
+                string js = JsonUtility.ToJson(SocketManager.Instance.player);
                 SocketManager.Instance.socket.Emit("GetPlayerMove", js);
             }
-            
+
         }
 
         public void ApplyCrouching()
@@ -450,7 +451,7 @@ namespace Akila.FPSFramework
 
             //update
             nextStep = stepCycle + stepInterval;
-           
+
             int currentFootStepIndex = Random.Range(0, footStepsAudio.GetLength());
 
             onStep?.Invoke(currentFootStepIndex);
@@ -471,16 +472,16 @@ namespace Akila.FPSFramework
             xRotation -= CharacterInput.lookInput.y;
             SocketManager.Instance.player.rotate.x = xRotation;
             SocketManager.Instance.player.rotate.y = yRotation;
-                string js=JsonUtility.ToJson(SocketManager.Instance.player);
+            string js = JsonUtility.ToJson(SocketManager.Instance.player);
 
-            SocketManager.Instance.socket.Emit("GetPlayerMove",js);
+            SocketManager.Instance.socket.Emit("GetPlayerMove", js);
 
-            
+
         }
 
-        public void SetRotaitonSoceket(float xRotation , float yRotation)
+        public void SetRotaitonSoceket(float xRotation, float yRotation)
         {
-xRotation = Mathf.Clamp(xRotation, minimumX, maximumX);
+            xRotation = Mathf.Clamp(xRotation, minimumX, maximumX);
 
             cameraRotation = Quaternion.Slerp(cameraRotation, Quaternion.Euler(xRotation, yRotation, 0), Time.deltaTime * 100);
             playerRotation = Quaternion.Slerp(playerRotation, Quaternion.Euler(0, yRotation, 0), Time.deltaTime * 100);
@@ -537,7 +538,7 @@ xRotation = Mathf.Clamp(xRotation, minimumX, maximumX);
             RaycastHit slopeHit;
             if (Physics.Raycast(transform.position, Vector3.down, out slopeHit))
             {
-              
+
                 return (Vector3.Angle(Vector3.down, slopeHit.normal) - 180) * -1;
             }
             return 0;
@@ -582,12 +583,12 @@ xRotation = Mathf.Clamp(xRotation, minimumX, maximumX);
                 AudioLowPassFilter lowPassFilter = audioListener.GetComponent<AudioLowPassFilter>();
                 AudioDistortionFilter distortionFilter = audioListener.GetComponent<AudioDistortionFilter>();
 
-                if(echoFilter) echoFilter.enabled = value;
-                if(reverbFilter)reverbFilter.enabled = value;
-                if(highPassFilter) highPassFilter.enabled = value;
-                if(lowPassFilter) lowPassFilter.enabled = value;
-                if(distortionFilter) distortionFilter.enabled = value;
-                
+                if (echoFilter) echoFilter.enabled = value;
+                if (reverbFilter) reverbFilter.enabled = value;
+                if (highPassFilter) highPassFilter.enabled = value;
+                if (lowPassFilter) lowPassFilter.enabled = value;
+                if (distortionFilter) distortionFilter.enabled = value;
+
                 audioListener.enabled = value;
             }
         }
@@ -624,7 +625,7 @@ xRotation = Mathf.Clamp(xRotation, minimumX, maximumX);
                 }
             }
 
-            if(!controller.isGrounded)
+            if (!controller.isGrounded)
             {
                 //totalVelocity += Physics.gravity * gravity * Time.deltaTime;
             }
