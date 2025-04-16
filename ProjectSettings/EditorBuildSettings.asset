@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/EmreGame.unity
     guid: 32b8164d07999aa4c89c22c426254b11
+  - enabled: 1
+    path: Assets/EnemyAI/Examples/Scenes/FPS.unity
+    guid: 3984c5d5fe985f946ada75ddae8e4786
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: fe0ad163545f89b47813a7b41af4a66a,
       type: 3}

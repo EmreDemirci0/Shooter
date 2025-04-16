@@ -270,5 +270,6 @@ public class NpcController : MonoBehaviour
         {
             timeLookingAtPlayer = 0f;
         }
+        
     }
 }

@@ -78,7 +78,7 @@ namespace Dynamite3D.RealIvy
 
         public Camera cam;
         public MovementSettings movementSettings = new MovementSettings();
-        public MouseLook mouseLook = new MouseLook();
+        public MouseLookIvy mouseLook = new MouseLookIvy();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
 
 
