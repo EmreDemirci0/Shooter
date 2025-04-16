@@ -225,37 +225,37 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 6b57d615d30e1f04a8139170ba9db3f2,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.6
+      value: 5.249538
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b57d615d30e1f04a8139170ba9db3f2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.081
+      value: 0.7867567
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b57d615d30e1f04a8139170ba9db3f2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 14.4
+      value: 22.989347
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b57d615d30e1f04a8139170ba9db3f2,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.31897187
+      value: 0.6538601
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b57d615d30e1f04a8139170ba9db3f2,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0.010988276
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b57d615d30e1f04a8139170ba9db3f2,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9477642
+      value: 0.75642896
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b57d615d30e1f04a8139170ba9db3f2,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.012707942
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b57d615d30e1f04a8139170ba9db3f2,
         type: 3}
@@ -276,6 +276,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ch45_nonPBR
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6b57d615d30e1f04a8139170ba9db3f2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 6b57d615d30e1f04a8139170ba9db3f2,
         type: 3}
@@ -562,7 +567,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f233effee963cb4eac869474a352fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 2146612043}
 --- !u!4 &1006174529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2530251679569251172, guid: 6b57d615d30e1f04a8139170ba9db3f2,
