@@ -44,10 +44,16 @@ namespace Akila.FPSFramework
                 source.interactAudio?.PlayOneShot(interactSound);
             else if (source.defaultInteractAudio)
                 source.interactAudio?.PlayOneShot(source.defaultInteractAudio.audioClip);
+            GameObject player = source.transform.SearchFor<ICharacterController>()?.gameObject;
+            gun.userID = player.GetComponent<PlayerController>().player.userID;
+
+            string js = JsonUtility.ToJson(gun);
             switch (type)
             {
                 case PickableType.Item:
-                    InteractWithItem(source);
+                    SocketManager.Instance.socket.Emit("TakeGun", js);
+
+                    //InteractWithItem(source);
                     break;
                 case PickableType.Collectable:
                     InteractWithCollectable(source);
@@ -64,16 +70,15 @@ namespace Akila.FPSFramework
             return $"{interactionName} {info}";
         }
 
-        public virtual void InteractWithItem(InteractionsManager source)
+        public virtual void InteractWithItem(IInventory source)
         {
-            if (source == null || source.Inventory == null)
+            if (source == null)
             {
                 Debug.LogError("Missing InteractionsManager or Inventory reference during item interaction.", gameObject);
                 return;
             }
 
-            GameObject player = source.transform.SearchFor<ICharacterController>()?.gameObject;
-            gun.userID = player.GetComponent<PlayerController>().player.userID;
+
 
             if (!isActive || item == null)
             {
@@ -81,10 +86,9 @@ namespace Akila.FPSFramework
                 return;
             }
 
-            IInventory inventory = source.Inventory;
+            IInventory inventory = source;
 
             InventoryItem newItem = Instantiate(item, inventory.transform);
-            print(item.gameObject.name);
             inventory.items = inventory.transform.GetComponentsInChildren<InventoryItem>(true).ToList();
 
             int index = inventory.items.IndexOf(newItem);
@@ -99,12 +103,8 @@ namespace Akila.FPSFramework
                 index = inventory.items.Count - 1;
             }
             index = Mathf.Clamp(index, 0, inventory.maxSlots - 1);
-            gun.index = index;
-
-            string js = JsonUtility.ToJson(gun);
-            SocketManager.Instance.socket.Emit("TakeGun", js);
-
-            //Destroy(gameObject);
+            inventory.Switch(index, false);
+            Destroy(gameObject);
         }
 
         public virtual void InteractWithCollectable(InteractionsManager source)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Akila.FPSFramework;
 using Newtonsoft.Json;
 using TMPro;
 using UnityEngine;
@@ -24,7 +25,7 @@ public class LoginController : MonoBehaviour
             var room = JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
             SocketManager.Instance.room = room;
             SocketManager.Instance.player.roomID = room.roomID;
-            SceneManager.LoadScene("Game");
+            LoadingScreen.LoadScene("Game fadim");
 
         });
 
@@ -55,7 +56,7 @@ public class LoginController : MonoBehaviour
             }
 
         });
-    } 
+    }
 
     private void Update()
     {

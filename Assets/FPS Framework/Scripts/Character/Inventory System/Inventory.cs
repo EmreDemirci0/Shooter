@@ -121,44 +121,68 @@ namespace Akila.FPSFramework
             previousItemIndex = currentItemIndex;
         }
 
+        public void switchSoc(int index)
+        {
+            Switch(index);
+        }
+
         private void GetInput()
         {
             if (!isInputActive) return;
             if (characterInput.controls.Player.Item1.triggered)
             {
-                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+                SocketManager.Instance.player.gunIndex = 0;
+
+                string js = JsonUtility.ToJson(SocketManager.Instance.player);
+                SocketManager.Instance.socket.Emit("ChangeGun", js);
             }
             if (characterInput.controls.Player.Item2.triggered && items.Count >= 2)
             {
-                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+                SocketManager.Instance.player.gunIndex = 1;
+                string js = JsonUtility.ToJson(SocketManager.Instance.player);
+                SocketManager.Instance.socket.Emit("ChangeGun", js);
             }
             if (characterInput.controls.Player.Item3.triggered && items.Count >= 3)
             {
-                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+                SocketManager.Instance.player.gunIndex = 2;
+                string js = JsonUtility.ToJson(SocketManager.Instance.player);
+                SocketManager.Instance.socket.Emit("ChangeGun", js);
             }
             if (characterInput.controls.Player.Item4.triggered && items.Count >= 4)
             {
-                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+                SocketManager.Instance.player.gunIndex = 3;
+                string js = JsonUtility.ToJson(SocketManager.Instance.player);
+                SocketManager.Instance.socket.Emit("ChangeGun", js);
             }
             if (characterInput.controls.Player.Item5.triggered && items.Count >= 5)
             {
-                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+                SocketManager.Instance.player.gunIndex = 4;
+                string js = JsonUtility.ToJson(SocketManager.Instance.player);
+                SocketManager.Instance.socket.Emit("ChangeGun", js);
             }
             if (characterInput.controls.Player.Item6.triggered && items.Count >= 6)
             {
-                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+                SocketManager.Instance.player.gunIndex = 5;
+                string js = JsonUtility.ToJson(SocketManager.Instance.player);
+                SocketManager.Instance.socket.Emit("ChangeGun", js);
             }
             if (characterInput.controls.Player.Item7.triggered && items.Count >= 7)
             {
-                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+                SocketManager.Instance.player.gunIndex = 6;
+                string js = JsonUtility.ToJson(SocketManager.Instance.player);
+                SocketManager.Instance.socket.Emit("ChangeGun", js);
             }
             if (characterInput.controls.Player.Item8.triggered && items.Count >= 8)
             {
-                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+                SocketManager.Instance.player.gunIndex = 7;
+                string js = JsonUtility.ToJson(SocketManager.Instance.player);
+                SocketManager.Instance.socket.Emit("ChangeGun", js);
             }
             if (characterInput.controls.Player.Item9.triggered && items.Count >= 9)
             {
-                SocketManager.Instance.socket.Emit("ChangeGun", currentItemIndex);
+                SocketManager.Instance.player.gunIndex = 8;
+                string js = JsonUtility.ToJson(SocketManager.Instance.player);
+                SocketManager.Instance.socket.Emit("ChangeGun", js);
             }
 
             if (characterInput.controls.Player.SwitchItem.ReadValue<float>() > 0) currentItemIndex++;

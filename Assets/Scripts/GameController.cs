@@ -52,6 +52,12 @@ public class GameController : MonoBehaviour
             var pla = PlaConts.FirstOrDefault(x => x.player.userID == fire.userID);
             pla.inv.items[pla.inv.currentItemIndex].GetComponentInChildren<ProceduralAnimator>().Play(fire.animType);
         });
+        SocketManager.Instance.socket.OnUnityThread("ChangeWeapon", data =>
+        {
+            var fire = JsonConvert.DeserializeObject<List<Player>>(data.ToString())[0];
+            var pla = PlaConts.FirstOrDefault(x => x.player.userID == fire.userID);
+            pla.inv.switchSoc(fire.gunIndex);
+        });
         SocketManager.Instance.socket.OnUnityThread("SetReload", data =>
         {
             var fire = JsonConvert.DeserializeObject<List<string>>(data.ToString())[0];
@@ -69,14 +75,13 @@ public class GameController : MonoBehaviour
         {
             var gun = JsonConvert.DeserializeObject<List<Gun>>(data.ToString())[0];
             var pla = PlaConts.FirstOrDefault(x => x.player.userID == gun.userID);
-            GameObject gam = Items.FirstOrDefault(x => x.gun.gunID == gun.gunID).gameObject;
+            var gam = Items.FirstOrDefault(x => x.gun.gunID == gun.gunID);
             if (gam == null)
             {
                 return; // Eğer null veya silinmişse işlemi durdur
             }
             print(pla.gameObject.name + " " + gun.gunID + " " + gun.index);
-            pla.inv.Switch(gun.index - 1);
-            Destroy(gam);
+            gam.InteractWithItem(pla.inv);
 
         });
         UIManagerNew.Instance.SetPlaInfo(SocketManager.Instance.player);

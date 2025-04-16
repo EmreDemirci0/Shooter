@@ -17,6 +17,7 @@ public class Player
     public Vector3 rotate;
     public string animType;
     public bool isCam;
+    public int gunIndex;
 }
 [Serializable]
 public class Room
