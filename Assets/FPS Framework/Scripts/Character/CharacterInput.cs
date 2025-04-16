@@ -72,7 +72,7 @@ namespace Akila.FPSFramework
         /// </summary>
         public bool crouchInput { get; set; }
 
-       
+
 
         /// <summary>
         /// The value added from the function AddLookAmount(). Setting this to anything will rotate the camera using the value.
@@ -83,7 +83,8 @@ namespace Akila.FPSFramework
         /// Using this value to always get sprint input regardless of the player state.
         /// This is used to then filter the input and choose when to use it.
         /// </summary>
-       /* [HideInInspector]*/ public bool rawSprintInput;
+        /* [HideInInspector]*/
+        public bool rawSprintInput;
 
         private float lastSprintClickTime;
 
@@ -94,7 +95,7 @@ namespace Akila.FPSFramework
 
         protected void Update()
         {
-            if (FPSFrameworkCore.IsActive == false )
+            if (FPSFrameworkCore.IsActive == false)
                 return;
 
             //Read values in the update. You can't change input values from the external class as it will reset itself.
@@ -124,8 +125,6 @@ namespace Akila.FPSFramework
             //Jump input
             jumpInput = controls.Player.Jump.triggered;
 
-            Vector2 lookInput = new Vector2();
-
             //Find the main camera if it's null only.
             mainCamera = Camera.main;
 
@@ -141,7 +140,7 @@ namespace Akila.FPSFramework
 
                     if (characterManager.character.isDynamicSensitivityEnabled)
                     {
-                        finalSensitivity = sensitivity * 
+                        finalSensitivity = sensitivity *
                             (characterManager.character.fovToSensitivityCurve.Evaluate(mainCamera.fieldOfView / 60));
                     }
                     else
@@ -156,9 +155,9 @@ namespace Akila.FPSFramework
 
                 finalSensitivity = sensitivity;
             }
-            
+
             if (FPSFrameworkCore.IsPaused) finalSensitivity = 0;
-            
+
             lookInput = addedLookValue + (rawLookInput * finalSensitivity);
 
             this.lookInput = (new Vector2(lookInput.x, lookInput.y) / 200) + addedLookValue;
@@ -171,9 +170,9 @@ namespace Akila.FPSFramework
 
         private void LateUpdate()
         {
-           
+
         }
-        
+
         protected void AddInputListner()
         {
             //Sprint
@@ -202,7 +201,7 @@ namespace Akila.FPSFramework
                     crouchInput = !crouchInput;
             };
 
-            
+
         }
 
         /// <summary>
@@ -224,11 +223,11 @@ namespace Akila.FPSFramework
 
             //Using event logic to allow external disabling of the input.
             //Example: You could set the sprint value from the external class without it resting itself.
-            
+
             //if(SocketManager.Instance.player.userID == GetComponent<Actor>().id)
             //{ 
             //if(canmove)
-                AddInputListner();
+            AddInputListner();
             //}
         }
 

@@ -33,11 +33,14 @@ namespace Akila.FPSFramework
 
         public AudioClip currentInteractAudioClip { get; set; }
 
+        public PlayerController player;
+
         private void Start()
         {
             Inventory = GetComponent<IInventory>();
             controls = new Controls();
             controls.Player.Enable();
+            player = GetComponentInParent<PlayerController>();
         }
 
         private void OnEnable()
@@ -45,25 +48,27 @@ namespace Akila.FPSFramework
             interactAudio = new Audio();
 
             if (defaultInteractAudio != null)
-               currentInteractAudioClip = defaultInteractAudio.audioClip;
+                currentInteractAudioClip = defaultInteractAudio.audioClip;
 
             interactAudio.Setup(this, defaultInteractAudio);
         }
 
         private void Update()
         {
+            if (player.player.userID != SocketManager.Instance.player.userID) return;
             IInteractable interactable = GetInteractable();
 
-            /*if(HUDObject)
-            HUDObject.SetActive(isActive && interactable != null);*/
+            if (HUDObject)
+                HUDObject.SetActive(isActive && interactable != null);
 
-            if(interactable != null && isActive)
+            if (interactable != null && isActive)
             {
                 if (interactKeyText) interactKeyText.SetText(controls.Player.Intract.GetBindingDisplayString());
-                if(interactActionText) interactActionText.SetText(interactable.GetInteractionName());
+                if (interactActionText) interactActionText.SetText(interactable.GetInteractionName());
 
                 if (controls.Player.Intract.triggered)
                 {
+
                     interactable.Interact(this);
                 }
             }
@@ -83,7 +88,7 @@ namespace Akila.FPSFramework
             }
 
             IInteractable closestInteractable = null;
-            foreach(IInteractable interactable in interactables)
+            foreach (IInteractable interactable in interactables)
             {
                 Vector3 position = transform.position;
                 Vector3 interactablePosition = interactable.transform.position;
@@ -93,7 +98,7 @@ namespace Akila.FPSFramework
                 {
                     closestInteractable = interactable;
                 }
-                else if(Vector3.Distance(position, interactablePosition) < Vector3.Distance(position, closestInteractable.transform.position))
+                else if (Vector3.Distance(position, interactablePosition) < Vector3.Distance(position, closestInteractable.transform.position))
                 {
                     closestInteractable = interactable;
                 }

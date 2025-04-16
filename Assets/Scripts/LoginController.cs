@@ -11,32 +11,33 @@ public class LoginController : MonoBehaviour
     public TMP_InputField nameInput;
     public JoinRoomController joinRoomPrefab;
     public Transform container;
+    public GameObject[] panels;
+    public GameObject[] ClosePanels;
 
     void Start()
     {
-        Player pla = new()
-        {
-            socketID = SocketManager.Instance.socket.Id,
-            userID = SocketManager.Instance.socket.Id,
-            PlaName = nameInput.text,
-            roomID = "test"
-        };
-        SocketManager.Instance.player = pla;
-        string js = JsonUtility.ToJson(pla);
-        SocketManager.Instance.socket.Emit("SetPla", js);
+
 
         SocketManager.Instance.socket.OnUnityThread("JoinRooms", rooms =>
         {
             var room = JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
             SocketManager.Instance.room = room;
             SocketManager.Instance.player.roomID = room.roomID;
-            SceneManager.LoadScene("EmreGame");
+            SceneManager.LoadScene("Game");
 
         });
 
 
         SocketManager.Instance.socket.OnUnityThread("Rooms", rooms =>
         {
+            foreach (var item in panels)
+            {
+                item.SetActive(true);
+            }
+            foreach (var item in ClosePanels)
+            {
+                item.SetActive(false);
+            }
             var room = JsonConvert.DeserializeObject<List<List<Room>>>(rooms.ToString())[0];
             for (int i = 0; i < container.childCount; i++)
             {
@@ -53,22 +54,28 @@ public class LoginController : MonoBehaviour
             }
 
         });
-        SocketManager.Instance.socket.Emit("GetRooms");
     }
-
-    public void CreateRoom()
+    public void Register()
     {
-        if (!string.IsNullOrEmpty(nameInput.text))
+        if (string.IsNullOrEmpty(nameInput.text))
         {
-
-            SocketManager.Instance.socket.Emit("CreateRoom", nameInput.text);
-
+            return;
         }
-
+        Player pla = new()
+        {
+            socketID = SocketManager.Instance.socket.Id,
+            userID = SocketManager.Instance.socket.Id,
+            PlaName = nameInput.text,
+            roomID = "test"
+        };
+        SocketManager.Instance.player = pla;
+        string js = JsonUtility.ToJson(pla);
+        SocketManager.Instance.socket.Emit("SetPla", js);
     }
 
     public void Play()
     {
 
+        SocketManager.Instance.socket.Emit("CreateRoom", nameInput.text);
     }
 }

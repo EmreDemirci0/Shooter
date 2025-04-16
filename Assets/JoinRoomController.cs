@@ -10,6 +10,7 @@ public class JoinRoomController : MonoBehaviour
 	public TextMeshProUGUI countText;
 	public Button joinButton;
 	public Button joinWatchButton;
+
 	public void SetInfo(Room room)
 	{
 		roomidText.text = room.roomID;

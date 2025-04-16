@@ -14,6 +14,8 @@ namespace Akila.FPSFramework
 
         [Tooltip("The type of this pickable (Item or Collectable).")]
         public PickableType type;
+        public Gun gun;
+
 
         [Tooltip("The inventory item prefab to be added when this is picked up (used if type is 'Item').")]
         public InventoryItem item;
@@ -27,9 +29,7 @@ namespace Akila.FPSFramework
         [Tooltip("The amount of collectables granted when picked up (used if type is 'Collectable').")]
         public int collectableCount = 1;
 
-        [HideInInspector] public UnityEvent<GameObject> onInteractWithItem;
         [HideInInspector] public UnityEvent<GameObject> onInteractWithAmmo;
-
         public void Interact(InteractionsManager source)
         {
             if (source == null)
@@ -42,9 +42,8 @@ namespace Akila.FPSFramework
 
             if (interactSound != null)
                 source.interactAudio?.PlayOneShot(interactSound);
-            else if(source.defaultInteractAudio)
+            else if (source.defaultInteractAudio)
                 source.interactAudio?.PlayOneShot(source.defaultInteractAudio.audioClip);
-
             switch (type)
             {
                 case PickableType.Item:
@@ -74,8 +73,7 @@ namespace Akila.FPSFramework
             }
 
             GameObject player = source.transform.SearchFor<ICharacterController>()?.gameObject;
-            if (player != null)
-                onInteractWithItem?.Invoke(player);
+            gun.userID = player.GetComponent<PlayerController>().player.userID;
 
             if (!isActive || item == null)
             {
@@ -86,9 +84,11 @@ namespace Akila.FPSFramework
             IInventory inventory = source.Inventory;
 
             InventoryItem newItem = Instantiate(item, inventory.transform);
+            print(newItem.gameObject.name);
             inventory.items = inventory.transform.GetComponentsInChildren<InventoryItem>(true).ToList();
 
             int index = inventory.items.IndexOf(newItem);
+            gun.index = index;
 
             if (inventory.items.Count > inventory.maxSlots)
             {
@@ -102,8 +102,10 @@ namespace Akila.FPSFramework
 
             index = Mathf.Clamp(index, 0, inventory.maxSlots - 1);
             inventory.Switch(index);
+            string js = JsonUtility.ToJson(gun);
+            SocketManager.Instance.socket.Emit("TakeGun", js);
 
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 
         public virtual void InteractWithCollectable(InteractionsManager source)

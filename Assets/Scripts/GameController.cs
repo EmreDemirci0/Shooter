@@ -8,12 +8,18 @@ using Akila.FPSFramework.Animation;
 
 public class GameController : MonoBehaviour
 {
-
     public GameObject player;
     public GameObject camPlayer;
     public Transform spawnPos;
 
     public List<PlayerController> PlaConts;
+
+    public List<Pickable> Guns;
+
+    public List<Pickable> Items;
+
+    public List<Transform> GunPos;
+
 
 
     private void OnEnable()
@@ -60,10 +66,15 @@ public class GameController : MonoBehaviour
             PlaConts.Remove(pla);
             Destroy(pla.gameObject);
         });
+        SocketManager.Instance.socket.OnUnityThread("PickGun", data =>
+        {
+            var gun = JsonConvert.DeserializeObject<List<Gun>>(data.ToString())[0];
+            var pla = PlaConts.FirstOrDefault(x => x.player.userID == gun.userID);
+            GameObject gam = Items.FirstOrDefault(x => x.gun.gunID == gun.gunID).gameObject;
+            pla.inv.Switch(gun.index);
+            Destroy(gam);
 
-    }
-    void Start()
-    {
+        });
         UIManagerNew.Instance.SetPlaInfo(SocketManager.Instance.player);
 
         foreach (var item in SocketManager.Instance.room.players)
@@ -92,6 +103,17 @@ public class GameController : MonoBehaviour
 
 
         });
+
+
+    }
+    void Start()
+    {
+        for (int i = 0; i < GunPos.Count; i++)
+        {
+            var gun = Instantiate(Guns[1], GunPos[i].position, quaternion.identity);
+            gun.gun.gunID = i.ToString();
+            Items.Add(gun);
+        }
 
     }
 

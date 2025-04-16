@@ -14018,7 +14018,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: FPS FRAMEWORK 2.0
+  m_text: NULL REFERENCE
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e35107041e43ae5469e93eba1c3fff74, type: 2}
   m_sharedMaterial: {fileID: 6628682747001422315, guid: e35107041e43ae5469e93eba1c3fff74,
@@ -27472,6 +27472,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1271495045414051965, guid: 9d94bb0b2a14af54289a4c826a6c2e35,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2870485839090714205, guid: 9d94bb0b2a14af54289a4c826a6c2e35,
         type: 3}
       propertyPath: m_Texture
@@ -27950,6 +27955,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Settings Menu
+      objectReference: {fileID: 0}
+    - target: {fileID: 3361015363918670469, guid: e4df641fdecdeec4f9a829bacafb9fcf,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3625600691398029340, guid: e4df641fdecdeec4f9a829bacafb9fcf,
         type: 3}

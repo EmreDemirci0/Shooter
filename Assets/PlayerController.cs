@@ -2,6 +2,7 @@ using Akila.FPSFramework;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -10,12 +11,13 @@ public class PlayerController : MonoBehaviour
     public bool canMove = false;
 
     public Inventory inv;
+    public TextMeshPro NameText;
     //public Firearm firearm;
 
 
-    private void OnEnable()
+    private void Start()
     {
-        
+        NameText.text = player.PlaName;
     }
     public void SetControl()
     {

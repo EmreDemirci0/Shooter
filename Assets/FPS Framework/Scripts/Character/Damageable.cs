@@ -60,7 +60,7 @@ namespace Akila.FPSFramework
                 }
             }
 
-            if(type == HealthType.Other)
+            if (type == HealthType.Other)
             {
                 if (ragdoll || Actor) Debug.LogWarning($"{this} has humanoid components and it's type is Other please change type to Humanoid to avoid errors.");
             }
@@ -108,14 +108,14 @@ namespace Akila.FPSFramework
             if (!allowDamageScreen) return;
 
             if (type != HealthType.Player) return;
-            
-            if(Actor == null)
+
+            if (Actor == null)
             {
                 Debug.LogError("Couldn't find Actor on Damageable", gameObject);
                 return;
             }
 
-            if(Actor.characterManager == null)
+            if (Actor.characterManager == null)
             {
                 Debug.LogError("Couldn't find CharacterManager on Damagable.", gameObject);
                 return;
@@ -139,7 +139,7 @@ namespace Akila.FPSFramework
         {
             if (!isActive) return;
 
-            if(type == HealthType.Player)
+            if (type == HealthType.Player)
             {
                 if (Actor.respawnable) Actor.deaths++;
             }
@@ -157,7 +157,7 @@ namespace Akila.FPSFramework
             }
 
             if (damageSource && type == HealthType.Player) DeathCamera.Instance?.Enable(gameObject, damageSource);
-            
+
             died = true;
         }
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using UnityEngine.Events;
 using TMPro;
+using System.Linq;
 
 namespace Akila.FPSFramework
 {
@@ -41,13 +42,13 @@ namespace Akila.FPSFramework
         /// The inventory of this actor. It's used to manage the actor's items, ammo and ect...
         /// </summary>
         public IInventory inventory { get; private set; }
+        public PlayerController playerController;
 
         protected virtual void Awake()
         {
             inventory = transform.SearchFor<IInventory>();
             characterManager = GetComponent<CharacterManager>();
             damageable = GetComponent<IDamageable>();
-
         }
 
         protected virtual void Start()
@@ -72,14 +73,14 @@ namespace Akila.FPSFramework
 
         public void ConfirmDeath()
         {
-            if(damageable == null)
+            if (damageable == null)
             {
                 Debug.LogError("Damagable (IDamagable) is not set.", gameObject);
 
                 return;
             }
 
-            if(damageable.damageSource == null)
+            if (damageable.damageSource == null)
             {
                 Debug.LogError("DamageSource in Damageable is not set.", gameObject);
 
@@ -88,7 +89,8 @@ namespace Akila.FPSFramework
 
             //Return if already death is confirmed
             if (damageable.deadConfirmed) return;
-
+            if (damageable.damageSource.GetComponent<PlayerController>().player.userID != SocketManager.Instance.player.userID)
+                return;
             Actor killer = damageable.damageSource.GetComponent<Actor>();
             UIManager uIManager = UIManager.Instance;
 
@@ -105,7 +107,7 @@ namespace Akila.FPSFramework
                     killFeed.Show(killer, actorName, false);
                 }
 
-                if(hitmarker != null)
+                if (hitmarker != null)
                 {
                     hitmarker.Show(true);
                 }
@@ -122,7 +124,7 @@ namespace Akila.FPSFramework
             if (respawnActive == false) return;
 
             SpawnManager spawnManager = FindObjectOfType<SpawnManager>();
-            
+
             spawnManager.SpawnActor("bot", respawnDelay);
         }
     }

@@ -7,6 +7,7 @@ namespace Akila.FPSFramework
     /// </summary>
     public interface IInteractable
     {
+
         /// <summary>
         /// Gets the transform of the interactable object.
         /// </summary>

@@ -20,6 +20,8 @@ namespace Akila.FPSFramework
         /// </summary>
         public Firearm firearm { get; set; }
 
+
+
         /// <summary>
         /// Represents the throwable component of the item. If the weapon is not throwable, this will be null.
         /// </summary>
@@ -202,7 +204,7 @@ namespace Akila.FPSFramework
         {
             Setup();
         }
-       
+
         /// <summary>
         /// Initializes necessary components for the item, including animations and references.
         /// </summary>
@@ -340,7 +342,7 @@ namespace Akila.FPSFramework
             if (leanLeftAnimation != null)
             {
                 leanLeftAnimation.triggerType = ProceduralAnimation.TriggerType.None;
-               
+
             }
 
             // Update right and left aiming lean animations
@@ -430,7 +432,7 @@ namespace Akila.FPSFramework
         {
             proceduralAnimator = transform.SearchFor<ProceduralAnimator>();
 
-            if(!proceduralAnimator)
+            if (!proceduralAnimator)
             {
                 proceduralAnimator = gameObject.AddComponent<ProceduralAnimator>();
             }
@@ -546,7 +548,7 @@ namespace Akila.FPSFramework
 
                 connection1.target = aimAnim;
                 connection1.type = ProceduralAnimationConnectionType.AvoidInTrigger;
-                
+
                 connection2.target = recoilAnim;
                 connection2.type = ProceduralAnimationConnectionType.AvoidInTrigger;
 

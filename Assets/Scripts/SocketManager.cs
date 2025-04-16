@@ -25,6 +25,16 @@ public class Room
     public List<Player> players;
 }
 
+[Serializable]
+public class Gun
+{
+    public string gunName;
+    public string gunID;
+    public string userID;
+    public string CrossID;
+    public int index;
+}
+
 public class SocketManager : Singleton<SocketManager>
 {
     public SocketIOUnity socket;

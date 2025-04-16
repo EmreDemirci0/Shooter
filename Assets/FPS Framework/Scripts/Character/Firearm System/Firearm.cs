@@ -13,6 +13,8 @@ namespace Akila.FPSFramework
     [RequireComponent(typeof(FirearmAttachmentsManager))]
     public class Firearm : InventoryItem
     {
+
+
         public bool canMove = true;
         [Tooltip("The firearm preset that defines all values for this firearm. This preset is a ScriptableObject.")]
         public FirearmPreset preset;
@@ -95,6 +97,10 @@ namespace Akila.FPSFramework
         /// <summary>
         /// The number of shots fired in the current session.
         /// </summary>
+        /// 
+        /// 
+        /// 
+        /// 
         public int shotsFired { get; protected set; }
 
         public float currentSprayAmount { get; protected set; }
@@ -217,7 +223,6 @@ namespace Akila.FPSFramework
         {
             // Call the base class Start method to ensure any inherited initialization is performed.
             base.Start();
-
             // Check if a valid preset is provided
             if (preset == null)
             {
@@ -431,7 +436,6 @@ namespace Akila.FPSFramework
             // Fire if in firing state
             if (isFiring)
             {
-                //Ateş etme
                 Fire();
             }
 
@@ -966,6 +970,8 @@ namespace Akila.FPSFramework
         /// <param name="hit">Information about the hit result.</param>
         /// <param name="damage">The amount of damage to apply.</param>
         /// <param name="decalDirection">The direction for orienting the decal.</param>
+
+
         public static void UpdateHits(Firearm firearm, GameObject defaultDecal, Ray ray, RaycastHit hit, float damage, Vector3Direction decalDirection)
         {
             // Check if the hit object should be ignored based on IgnoreHitDetection component
@@ -1032,6 +1038,8 @@ namespace Akila.FPSFramework
                 damageable.Damage(totalDamage, actor.gameObject);
 
                 bool shouldHighlight = damageable.health <= damageable.maxHealth * 0.3f;
+                if (firearm.character.gameObject.GetComponent<PlayerController>().player.userID != SocketManager.Instance.player.userID)
+                    return;
 
                 if (firearm.character != null)
                 {
