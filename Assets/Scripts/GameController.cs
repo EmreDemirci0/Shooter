@@ -10,9 +10,10 @@ public class GameController : MonoBehaviour
 {
 
     public GameObject player;
+    public GameObject camPlayer;
     public Transform spawnPos;
 
-    public List<PlayerController> PlaCont;
+    public List<PlayerController> PlaConts;
 
 
     private void OnEnable()
@@ -22,7 +23,7 @@ public class GameController : MonoBehaviour
         SocketManager.Instance.socket.OnUnityThread("SetPlayerMove", data =>
             {
                 var pla = JsonConvert.DeserializeObject<List<Player>>(data.ToString())[0];
-                var den = PlaCont.FirstOrDefault(x => x.player.userID == pla.userID);
+                var den = PlaConts.FirstOrDefault(x => x.player.userID == pla.userID);
                 if (den == null || den.gameObject == null)
                 {
                     return; // Eğer null veya silinmişse işlemi durdur
@@ -37,20 +38,27 @@ public class GameController : MonoBehaviour
         SocketManager.Instance.socket.OnUnityThread("SetFire", data =>
         {
             var fire = JsonConvert.DeserializeObject<List<Fire>>(data.ToString())[0];
-            var pla = PlaCont.FirstOrDefault(x => x.player.userID == fire.userID);
+            var pla = PlaConts.FirstOrDefault(x => x.player.userID == fire.userID);
             pla.inv.GetComponentInChildren<Firearm>().Fire(fire);
         });
         SocketManager.Instance.socket.OnUnityThread("SetAnim", data =>
         {
             var fire = JsonConvert.DeserializeObject<List<Player>>(data.ToString())[0];
-            var pla = PlaCont.FirstOrDefault(x => x.player.userID == fire.userID);
+            var pla = PlaConts.FirstOrDefault(x => x.player.userID == fire.userID);
             pla.inv.items[pla.inv.currentItemIndex].GetComponentInChildren<ProceduralAnimator>().Play(fire.animType);
         });
         SocketManager.Instance.socket.OnUnityThread("SetReload", data =>
         {
             var fire = JsonConvert.DeserializeObject<List<string>>(data.ToString())[0];
-            var pla = PlaCont.FirstOrDefault(x => x.player.userID == fire);
+            var pla = PlaConts.FirstOrDefault(x => x.player.userID == fire);
             pla.inv.GetComponentInChildren<Firearm>().Reload();
+        });
+        SocketManager.Instance.socket.OnUnityThread("RemovePlayer", data =>
+        {
+            var fire = JsonConvert.DeserializeObject<List<string>>(data.ToString())[0];
+            var pla = PlaConts.FirstOrDefault(x => x.player.userID == fire);
+            PlaConts.Remove(pla);
+            Destroy(pla.gameObject);
         });
 
     }
@@ -61,8 +69,6 @@ public class GameController : MonoBehaviour
         foreach (var item in SocketManager.Instance.room.players)
         {
             AddPlayer(item);
-
-
         }
 
         SocketManager.Instance.socket.OnUnityThread("JoinRooms", rooms =>
@@ -71,10 +77,6 @@ public class GameController : MonoBehaviour
             Room oldRoom = SocketManager.Instance.room;
             SocketManager.Instance.room = room;
             Room newRoom = room;
-            var leftPlayers = oldRoom.players
-    .Where(op => !newRoom.players.Any(np => np.userID == op.userID))
-    .ToList();
-
             var joinedPlayers = newRoom.players
                 .Where(np => !oldRoom.players.Any(op => op.userID == np.userID))
                 .ToList();
@@ -86,10 +88,7 @@ public class GameController : MonoBehaviour
                 }
             }
 
-            if (leftPlayers.Count() > 0)
-            {
 
-            }
 
 
         });
@@ -98,6 +97,14 @@ public class GameController : MonoBehaviour
 
     public void AddPlayer(Player item)
     {
+        if (item.userID == SocketManager.Instance.player.userID && item.isCam)
+        {
+            GameObject cam = Instantiate(camPlayer, spawnPos.position, quaternion.identity);
+            cam.GetComponent<CameraPlayer>().player = item;
+            return;
+        }
+        if (item.isCam)
+            return;
         GameObject pla = Instantiate(player, spawnPos.position, quaternion.identity);
         pla.GetComponent<PlayerController>().player = item;
 
@@ -107,12 +114,10 @@ public class GameController : MonoBehaviour
             pla.GetComponentInChildren<CameraManager>().mainCamera.enabled = true;
             pla.GetComponentInChildren<CameraManager>().mainCamera.GetComponent<AudioListener>().enabled = true;
             pla.GetComponentInChildren<CameraManager>().overlayCamera.enabled = true;
-
-
         }
         pla.name = item.PlaName;
 
         pla.GetComponent<PlayerController>().SetControl();
-        PlaCont.Add(pla.GetComponent<PlayerController>());
+        PlaConts.Add(pla.GetComponent<PlayerController>());
     }
 }
