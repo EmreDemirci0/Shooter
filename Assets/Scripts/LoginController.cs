@@ -13,7 +13,8 @@ public class LoginController : MonoBehaviour
     public Transform container;
     public GameObject[] panels;
     public GameObject[] ClosePanels;
-
+    public GameObject menuGun;
+    public Vector3 menuGunRotationSpeed = new Vector3(20f, 30f, 40f);
     void Start()
     {
 
@@ -54,6 +55,14 @@ public class LoginController : MonoBehaviour
             }
 
         });
+    } 
+
+    private void Update()
+    {
+        if (menuGun != null)
+        {
+            menuGun.transform.Rotate(menuGunRotationSpeed * Time.deltaTime);
+        }
     }
     public void Register()
     {
