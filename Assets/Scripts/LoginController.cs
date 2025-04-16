@@ -30,7 +30,7 @@ public class LoginController : MonoBehaviour
             var room = JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
             SocketManager.Instance.room = room;
             SocketManager.Instance.player.roomID = room.roomID;
-            SceneManager.LoadScene("Game");
+            SceneManager.LoadScene("EmreGame");
 
         });
 

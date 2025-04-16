@@ -179,7 +179,7 @@ namespace Akila.FPSFramework
         /// Switches the attachment for a given type and name.
         /// </summary>
         /// <param name="typeAndName">Format: "AttachmentType/AttachmentName".</param>
-        public void SwitchAttachment(string typeAndName)
+        public void SwitchAttachment(string typeAndName)//Sight/Red Dot 1
         {
             Firearm firearm = transform.SearchFor<Firearm>();
 
