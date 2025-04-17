@@ -270,7 +270,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: 0, z: -1}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.18501766, y: 0.19516584, z: 0.0008805115}
+  m_ConnectedAnchor: {x: 0.18501641, y: 0.19516587, z: 0.00088071637}
   serializedVersion: 2
   m_SwingAxis: {x: 1, y: 0, z: 0}
   m_TwistLimitSpring:
@@ -323,7 +323,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.068010665
+  m_Radius: 0.04
   m_Height: 0.28031
   m_Direction: 1
   m_Center: {x: 0, y: 0.140156, z: 0}
@@ -495,7 +495,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000010357921, y: 0.40885353, z: -0.00000020372737}
+  m_ConnectedAnchor: {x: 0.00000033905428, y: 0.4088535, z: -0.00000003527394}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: 1}
   m_TwistLimitSpring:
@@ -548,7 +548,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.085361935
+  m_Radius: 0.06
   m_Height: 0.562251
   m_Direction: 1
   m_Center: {x: 0, y: 0.2811256, z: 0}
@@ -900,7 +900,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0946183
+  m_Radius: 0.07
   m_Height: 0.4088535
   m_Direction: 1
   m_Center: {x: 0, y: 0.20442683, z: 0}
@@ -1061,7 +1061,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.08536194
+  m_Radius: 0.06
   m_Height: 0.562251
   m_Direction: 1
   m_Center: {x: 0, y: 0.28112558, z: 0}
@@ -1339,7 +1339,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6ba59893b8386fb4fbe56ecff064c01d, type: 2}
+  - {fileID: 2100000, guid: 93a9dc6087caf634790dd0ded4e88b16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2143,7 +2143,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0946183
+  m_Radius: 0.07
   m_Height: 0.40885347
   m_Direction: 1
   m_Center: {x: 0, y: 0.20442681, z: 0}
@@ -2475,7 +2475,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.000098997196, y: 0.34540665, z: -0.018112984}
+  m_ConnectedAnchor: {x: 0.000099227116, y: 0.34540668, z: -0.018112717}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -2528,10 +2528,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
-  m_Height: 0.3
+  m_Radius: 0.07592962
+  m_Height: 0.24213041
   m_Direction: 1
-  m_Center: {x: 0, y: 0.05, z: 0}
+  m_Center: {x: -0.0011892766, y: 0.058060892, z: -0.000000009781478}
 --- !u!114 &6608106743333369694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2721,8 +2721,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.36984262, y: 0.26963446, z: 0.258515}
-  m_Center: {x: 0.00009526315, y: 0.13481742, z: -0.015902022}
+  m_Size: {x: 0.34709558, y: 0.25189108, z: 0.258515}
+  m_Center: {x: -0.011278274, y: 0.1348508, z: -0.015902014}
 --- !u!114 &4007566924002269103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3136,7 +3136,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.06439173
+  m_Radius: 0.04
   m_Height: 0.4690991
   m_Direction: 1
   m_Center: {x: 0, y: 0.2345496, z: 0}
@@ -3402,7 +3402,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.00000027171342, y: 0.28031206, z: -0.000000040978172}
+  m_ConnectedAnchor: {x: 0.000000036321588, y: 0.2803117, z: -0.000000015366814}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -3455,7 +3455,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.06439173
+  m_Radius: 0.04
   m_Height: 0.4690991
   m_Direction: 1
   m_Center: {x: 0, y: 0.23454957, z: 0}
@@ -3875,7 +3875,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.06801067
+  m_Radius: 0.04
   m_Height: 0.28031
   m_Direction: 1
   m_Center: {x: 0, y: 0.14015603, z: 0}
