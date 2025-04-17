@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using Akila.FPSFramework;
 using Akila.FPSFramework.Animation;
+using EnemyAI;
 
 public class GameController : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class GameController : MonoBehaviour
     public List<Pickable> Items;
 
     public List<Transform> GunPos;
+    [Header("NPC")]
+
+    public GameObject[] NPCPrefab;
+    public List<Transform> NPCSpawnPos;
+    public List<Transform> PatrolPos;
 
 
     private void OnEnable()
@@ -123,9 +129,20 @@ public class GameController : MonoBehaviour
             gun.gun.gunID = (i + 1).ToString();
             Items.Add(gun);
         }
+        Invoke(nameof(SpawnNpc), 1f);
 
     }
 
+    public void SpawnNpc()
+    {
+        for (int i = 0; i < NPCSpawnPos.Count; i++)
+        {
+            var npc = Instantiate(NPCPrefab[i % NPCPrefab.Length], NPCSpawnPos[i].position, quaternion.identity);
+            npc.GetComponent<StateController>().patrolWayPoints = PatrolPos;
+            npc.GetComponent<StateController>().aimTarget = PlaConts[0].transform;
+            npc.GetComponent<StateController>().enabled = true;
+        }
+    }
     public void AddPlayer(Player item)
     {
         if (item.userID == SocketManager.Instance.player.userID && item.isCam)

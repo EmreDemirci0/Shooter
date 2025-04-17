@@ -104,6 +104,11 @@ namespace EnemyAI
 		void Awake()
 		{
 			// Setup the references.
+		}
+
+		public void Start()
+		{
+			// Trigger initial state enable function.
 			coverSpot ??= new Dictionary<int, Vector3>();
 			coverSpot[this.GetHashCode()] = Vector3.positiveInfinity;
 			nav = GetComponent<NavMeshAgent>();
@@ -131,16 +136,12 @@ namespace EnemyAI
 			}
 			// Ensure the target has a health manager component to receive shots.
 			Debug.Assert(aimTarget.root.GetComponent<HealthManager>(), "You must add a health manager to the target");
-		}
 
-		public void Start()
-		{
-			// Trigger initial state enable function.
 			currentState.OnEnableActions(this);
 		}
 		private void OnEnable()
 		{
-			
+
 		}
 		void Update()
 		{
@@ -154,7 +155,7 @@ namespace EnemyAI
 			// Check current FSM state transition conditions.
 			currentState.CheckTransitions(this);
 
-			if (aimTarget.transform.parent==null)
+			if (aimTarget.transform.parent == null)
 			{
 				aimTarget.transform.parent = GameObject.Find("MyTarget2").transform;
 				Debug.Log("atandı");

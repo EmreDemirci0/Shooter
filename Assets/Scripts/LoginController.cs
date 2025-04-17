@@ -20,9 +20,9 @@ public class LoginController : MonoBehaviour
 
 
     //skin secme
-    public GameObject parent;           // Alt objelerin bulunduðu parent
+    public GameObject parent;           // Alt objelerin bulunduï¿½u parent
     public Button leftButton;           // Sol buton
-    public Button rightButton;          // Sað buton
+    public Button rightButton;          // Saï¿½ buton
 
     private int currentIndex = 0;
     private Transform[] children;
@@ -35,8 +35,8 @@ public class LoginController : MonoBehaviour
             var room = JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
             SocketManager.Instance.room = room;
             SocketManager.Instance.player.roomID = room.roomID;
-           LoadingScreen.LoadScene("FPS");
-           // LoadingScreen.LoadScene("Game fadim");
+            //LoadingScreen.LoadScene("FPS");
+            LoadingScreen.LoadScene("Game fadim");
 
 
         });
@@ -80,7 +80,7 @@ public class LoginController : MonoBehaviour
             children[i] = parent.transform.GetChild(i);
         }
 
-        // Ýlk objeyi göster, diðerlerini kapat
+        // ï¿½lk objeyi gï¿½ster, diï¿½erlerini kapat
         ShowOnlyCurrent();
 
         // Butonlara listener ekle
