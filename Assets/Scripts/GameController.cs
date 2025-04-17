@@ -147,6 +147,11 @@ public class GameController : MonoBehaviour
             gun.gun.gunID = (i + 1).ToString();
             Items.Add(gun);
         }
+        if (SocketManager.Instance.player.userID == SocketManager.Instance.room.players[0].userID)
+        {
+            startBut.gameObject.SetActive(true);
+
+        }
     }
     bool isStart = false;
     private void Update()
@@ -184,11 +189,7 @@ public class GameController : MonoBehaviour
             return;
         GameObject pla = Instantiate(player, spawnPos.position, quaternion.identity);
         pla.GetComponent<PlayerController>().player = item;
-        if (item.userID == SocketManager.Instance.room.players[0].userID)
-        {
-            startBut.gameObject.SetActive(true);
 
-        }
 
         if (item.userID == SocketManager.Instance.player.userID)
         {
