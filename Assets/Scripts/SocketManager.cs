@@ -47,7 +47,7 @@ public class SocketManager : Singleton<SocketManager>
     public float currentPing;
 
     //string uri = "http://185.242.161.111:1234";// server 
-    string uri = "http://172.20.10.2:1244";// LAN server
+    string uri = "http://10.20.48.71:1244";// LAN server
     //string uri = "http://localhost:1234"; // localhost server
 
     void OnEnable()
