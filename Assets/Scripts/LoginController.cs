@@ -21,8 +21,8 @@ public class LoginController : MonoBehaviour
 
     //skin secme
     public GameObject parent;           // Alt objelerin bulundu�u parent
-    public Button leftButton;           // Sol buton
-    public Button rightButton;          // Sa� buton
+    public InteractiveButton leftButton;           // Sol buton
+    public InteractiveButton rightButton;          // Sa� buton
 
     private int currentIndex = 0;
     private Transform[] children;
@@ -84,6 +84,7 @@ public class LoginController : MonoBehaviour
         ShowOnlyCurrent();
 
         // Butonlara listener ekle
+        if(leftButton)
         leftButton.onClick.AddListener(Previous);
         rightButton.onClick.AddListener(Next);
     }
