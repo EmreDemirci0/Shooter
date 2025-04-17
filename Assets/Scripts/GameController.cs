@@ -6,6 +6,17 @@ using System.Linq;
 using Akila.FPSFramework;
 using Akila.FPSFramework.Animation;
 using EnemyAI;
+using System;
+
+[Serializable]
+
+public class EnemyPos
+{
+    public Transform spawnPos;
+
+    public List<Transform> patrolPos;
+}
+
 
 public class GameController : MonoBehaviour
 {
@@ -23,8 +34,7 @@ public class GameController : MonoBehaviour
     [Header("NPC")]
 
     public GameObject[] NPCPrefab;
-    public List<Transform> NPCSpawnPos;
-    public List<Transform> PatrolPos;
+    public List<EnemyPos> EnemyPoss;
 
 
     private void OnEnable()
@@ -135,12 +145,11 @@ public class GameController : MonoBehaviour
 
     public void SpawnNpc()
     {
-        for (int i = 0; i < NPCSpawnPos.Count; i++)
+        for (int i = 0; i < EnemyPoss.Count; i++)
         {
-            var npc = Instantiate(NPCPrefab[i % NPCPrefab.Length], NPCSpawnPos[i].position, quaternion.identity);
-            npc.GetComponent<StateController>().patrolWayPoints = PatrolPos;
+            var npc = Instantiate(NPCPrefab[i % NPCPrefab.Length], EnemyPoss[i].spawnPos.position, quaternion.identity);
+            npc.GetComponent<StateController>().patrolWayPoints = EnemyPoss[i].patrolPos;
             npc.GetComponent<StateController>().aimTarget = PlaConts[0].transform;
-            npc.GetComponent<StateController>().enabled = true;
         }
     }
     public void AddPlayer(Player item)
