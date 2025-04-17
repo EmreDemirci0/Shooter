@@ -158,7 +158,6 @@ namespace EnemyAI
 			if (aimTarget.transform.parent == null)
 			{
 				aimTarget.transform.parent = GameObject.Find("MyTarget2").transform;
-				Debug.Log("atandı");
 			}
 		}
 

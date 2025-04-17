@@ -4,6 +4,7 @@ using System.Linq;
 using System;
 using System.Reflection;
 using UnityEngine.Events;
+using System.Collections;
 
 namespace Akila.FPSFramework
 {
@@ -76,8 +77,7 @@ namespace Akila.FPSFramework
                 {
                     if (!item) return;
                     InventoryItem newItem = Instantiate(item, transform);
-
-                    Destroy(item.gameObject);
+                    //Destroy(item.gameObject);
                 }
 
                 if (defaultItem)
@@ -89,7 +89,6 @@ namespace Akila.FPSFramework
 
             Switch(0);
         }
-
         private void Update()
         {
             if (!canMove) return;
