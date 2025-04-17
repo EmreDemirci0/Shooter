@@ -7,6 +7,7 @@ using Akila.FPSFramework;
 using Akila.FPSFramework.Animation;
 using EnemyAI;
 using System;
+using UnityEngine.UI;
 
 [Serializable]
 
@@ -35,6 +36,8 @@ public class GameController : MonoBehaviour
 
     public GameObject[] NPCPrefab;
     public List<EnemyPos> EnemyPoss;
+
+    public GameObject startBut;
 
 
     private void OnEnable()
@@ -129,6 +132,11 @@ public class GameController : MonoBehaviour
 
         });
 
+        SocketManager.Instance.socket.OnUnityThread("Start", data =>
+        {
+            SpawnNpc();
+        });
+
 
     }
     void Start()
@@ -139,8 +147,20 @@ public class GameController : MonoBehaviour
             gun.gun.gunID = (i + 1).ToString();
             Items.Add(gun);
         }
-        Invoke(nameof(SpawnNpc), 1f);
+    }
+    bool isStart = false;
+    private void Update()
+    {
+        if (SocketManager.Instance.player.userID == SocketManager.Instance.room.players[0].userID)
+        {
+            if (Input.GetKeyDown(KeyCode.F) && !isStart)
+            {
+                isStart = true;
+                SocketManager.Instance.socket.Emit("StartGame", SocketManager.Instance.player.roomID);
+                startBut.gameObject.SetActive(false);
+            }
 
+        }
     }
 
     public void SpawnNpc()
@@ -164,6 +184,11 @@ public class GameController : MonoBehaviour
             return;
         GameObject pla = Instantiate(player, spawnPos.position, quaternion.identity);
         pla.GetComponent<PlayerController>().player = item;
+        if (item.userID == SocketManager.Instance.room.players[0].userID)
+        {
+            startBut.gameObject.SetActive(true);
+
+        }
 
         if (item.userID == SocketManager.Instance.player.userID)
         {
