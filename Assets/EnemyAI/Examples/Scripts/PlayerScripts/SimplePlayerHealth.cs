@@ -1,23 +1,50 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
-// This class is created for the example scene. There is no support for this script.
 public class SimplePlayerHealth : HealthManager
 {
 	public float health = 100f;
 
+	[Header("Hurt Effect")]
 	public Transform canvas;
 	public GameObject hurtPrefab;
 	public float decayFactor = 0.8f;
 
 	private HurtHUD hurtUI;
+	private bool dead = false;
+
+	public Slider healthSlider;
+	private TextMeshProUGUI healthText;
 
 	private void Awake()
 	{
 		AudioListener.pause = false;
+
+		// 🎯 Slider'ı sahneden "Slider" tag'i ile bul
+		GameObject sliderObj = GameObject.FindWithTag("Slider");
+		if (sliderObj != null)
+		{
+			healthSlider = sliderObj.GetComponent<Slider>();
+			healthSlider.maxValue = health;
+			// 🎯 Text, Slider'ın 2. çocuğunda (index 1)
+			if (sliderObj.transform.childCount >= 3)
+			{
+				Transform textTransform = sliderObj.transform.GetChild(2);
+				healthText = textTransform.GetComponent<TextMeshProUGUI>();
+			}
+		}
+		else
+		{
+			Debug.LogWarning("Health Slider bulunamadı! Lütfen sahnede tag'i 'Slider' olan bir Slider objesi ekleyin.");
+		}
+
 		hurtUI = this.gameObject.AddComponent<HurtHUD>();
 		hurtUI.Setup(canvas, hurtPrefab, decayFactor, this.transform);
+
+		UpdateHealthUI();
 	}
 
 	public override void TakeDamage(Vector3 location, Vector3 direction, float damage, Collider bodyPart, GameObject origin)
@@ -25,26 +52,25 @@ public class SimplePlayerHealth : HealthManager
 		Debug.Log("Shoot");
 		health -= damage;
 
+		UpdateHealthUI();
+
 		if (hurtPrefab && canvas)
 			hurtUI.DrawHurtUI(origin.transform, origin.GetHashCode());
-	}
 
-	public void OnGUI()
-	{
-		if (health > 0f)
-		{
-			GUIStyle textStyle = new GUIStyle
-			{
-				fontSize = 50
-			};
-			textStyle.normal.textColor = Color.white;
-			GUI.Label(new Rect(0, Screen.height - 60, 30, 30), health.ToString(), textStyle);
-		}
-		else if (!dead)
+		if (health <= 0f && !dead)
 		{
 			dead = true;
 			StartCoroutine(nameof(ReloadScene));
 		}
+	}
+
+	private void UpdateHealthUI()
+	{
+		if (healthSlider != null)
+			healthSlider.value = health;
+
+		if (healthText != null)
+			healthText.text = Mathf.RoundToInt(Mathf.Max(health, 0)).ToString();
 	}
 
 	private IEnumerator ReloadScene()
@@ -58,7 +84,6 @@ public class SimplePlayerHealth : HealthManager
 		Camera.main.cullingMask = LayerMask.GetMask();
 
 		yield return new WaitForSeconds(1);
-
 		SceneManager.LoadScene(0);
 	}
 }

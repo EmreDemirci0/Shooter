@@ -183,6 +183,8 @@ public class GameController : MonoBehaviour
         {
             GameObject cam = Instantiate(camPlayer, spawnPos.position, quaternion.identity);
             cam.GetComponent<CameraPlayer>().player = item;
+            startBut.gameObject.SetActive(false);
+
             return;
         }
         if (item.isCam)

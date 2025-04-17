@@ -1047,11 +1047,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dead: 0
-  health: 10000
+  health: 1000
   canvas: {fileID: 0}
   hurtPrefab: {fileID: 5542824109845126322, guid: 96c82f1df8075f24aa60ec228a6b40dc,
     type: 3}
   decayFactor: 0.8
+  healthSlider: {fileID: 0}
 --- !u!1 &1928016188355849686
 GameObject:
   m_ObjectHideFlags: 0
