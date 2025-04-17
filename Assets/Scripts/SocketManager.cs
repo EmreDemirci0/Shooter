@@ -24,6 +24,7 @@ public class Player
 public class Room
 {
     public string roomID;
+    public int rand;
     public List<Player> players;
 }
 

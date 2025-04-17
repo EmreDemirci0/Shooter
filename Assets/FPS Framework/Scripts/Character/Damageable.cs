@@ -150,12 +150,20 @@ namespace Akila.FPSFramework
             if (destoryOnDeath && destroyRoot) Destroy(gameObject.transform.parent.gameObject, destroyDelay);
             //if (!died) Respwan();
 
-            if (ragdoll) ragdoll.Enable(damageDirection);
-            
+            if (ragdoll) ragdoll.Enable(damageDirection * 10);
+
             if (this.gameObject.GetComponent<NavMeshAgent>())
                 this.gameObject.GetComponent<NavMeshAgent>().enabled = false;
             if (this.gameObject.GetComponent<StateController>())
                 this.gameObject.GetComponent<StateController>().enabled = false;
+            if (this.gameObject.GetComponent<EnemyHealth>())
+                this.gameObject.GetComponent<EnemyHealth>().enabled = false;
+            if (this.gameObject.GetComponent<EnemyFootsteps>())
+                this.gameObject.GetComponent<EnemyFootsteps>().enabled = false;
+            if (this.gameObject.GetComponent<Damageable>())
+                this.gameObject.GetComponent<Damageable>().enabled = false;
+            if (this.gameObject.GetComponent<Actor>())
+                this.gameObject.GetComponent<Actor>().enabled = false;
             if (deathEffect)
             {
                 GameObject effect = Instantiate(deathEffect, transform.position, transform.rotation);

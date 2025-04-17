@@ -35,6 +35,7 @@ public class LoginController : MonoBehaviour
             var room = JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
             SocketManager.Instance.room = room;
             SocketManager.Instance.player.roomID = room.roomID;
+            Random.InitState(room.rand);
             //LoadingScreen.LoadScene("FPS");
             LoadingScreen.LoadScene("Game fadim");
 
@@ -66,12 +67,12 @@ public class LoginController : MonoBehaviour
 
                 joinRoomController.SetInfo(room[i]);
             }
-            if(room.Count<=1)
-			{
+            if (room.Count <= 1)
+            {
                 counts.gameObject.SetActive(true);
-			}
-			else
-			{
+            }
+            else
+            {
                 counts.gameObject.SetActive(false);
 
             }
@@ -93,8 +94,8 @@ public class LoginController : MonoBehaviour
         ShowOnlyCurrent();
 
         // Butonlara listener ekle
-        if(leftButton)
-        leftButton.onClick.AddListener(Previous);
+        if (leftButton)
+            leftButton.onClick.AddListener(Previous);
         rightButton.onClick.AddListener(Next);
     }
     void ShowOnlyCurrent()

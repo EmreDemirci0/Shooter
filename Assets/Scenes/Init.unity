@@ -175,8 +175,11 @@ MonoBehaviour:
     rotate: {x: 0, y: 0, z: 0}
     animType: 
     isCam: 0
+    gunIndex: 0
+    skinID: 0
   room:
     roomID: 
+    rand: 0
     players: []
   currentPing: 0
 --- !u!1 &949052886
