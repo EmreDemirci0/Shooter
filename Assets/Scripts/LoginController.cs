@@ -17,7 +17,7 @@ public class LoginController : MonoBehaviour
     public GameObject[] ClosePanels;
     public GameObject menuGun;
     public Vector3 menuGunRotationSpeed = new Vector3(20f, 30f, 40f);
-
+    public TextMeshProUGUI counts;
 
     //skin secme
     public GameObject parent;           // Alt objelerin bulundu�u parent
@@ -65,6 +65,15 @@ public class LoginController : MonoBehaviour
                 string st = JsonUtility.ToJson(room[i]);
 
                 joinRoomController.SetInfo(room[i]);
+            }
+            if(room.Count<=1)
+			{
+                counts.gameObject.SetActive(true);
+			}
+			else
+			{
+                counts.gameObject.SetActive(false);
+
             }
 
         });

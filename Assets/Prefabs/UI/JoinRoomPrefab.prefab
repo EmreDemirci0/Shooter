@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6477712972541509901}
   - component: {fileID: 8483380153796689446}
   m_Layer: 5
-  m_Name: Button_1
+  m_Name: watchbutton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887731591261166353}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 8305908813415326366}
   - component: {fileID: 3988385115736286708}
   m_Layer: 5
-  m_Name: Text (TMP)_1
+  m_Name: kisisayi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -284,16 +284,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: 5/5
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c9d2cc057c94539448b95208c911b845, type: 2}
-  m_sharedMaterial: {fileID: 6132644206396027478, guid: c9d2cc057c94539448b95208c911b845,
+  m_fontAsset: {fileID: 11400000, guid: e35107041e43ae5469e93eba1c3fff74, type: 2}
+  m_sharedMaterial: {fileID: 6628682747001422315, guid: e35107041e43ae5469e93eba1c3fff74,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -364,7 +364,7 @@ GameObject:
   - component: {fileID: 786397425441228109}
   - component: {fileID: 8080371654805723011}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -419,16 +419,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: HI GUYS BRO
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c9d2cc057c94539448b95208c911b845, type: 2}
-  m_sharedMaterial: {fileID: 6132644206396027478, guid: c9d2cc057c94539448b95208c911b845,
+  m_fontAsset: {fileID: 11400000, guid: e35107041e43ae5469e93eba1c3fff74, type: 2}
+  m_sharedMaterial: {fileID: 6628682747001422315, guid: e35107041e43ae5469e93eba1c3fff74,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -554,8 +554,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Join
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c9d2cc057c94539448b95208c911b845, type: 2}
-  m_sharedMaterial: {fileID: 6132644206396027478, guid: c9d2cc057c94539448b95208c911b845,
+  m_fontAsset: {fileID: 11400000, guid: e35107041e43ae5469e93eba1c3fff74, type: 2}
+  m_sharedMaterial: {fileID: 6628682747001422315, guid: e35107041e43ae5469e93eba1c3fff74,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -580,8 +580,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51.16
-  m_fontSizeBase: 51.16
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -635,7 +635,7 @@ GameObject:
   - component: {fileID: 8693186641175839005}
   - component: {fileID: 7657544578269380033}
   m_Layer: 5
-  m_Name: Button
+  m_Name: joinbutton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -810,8 +810,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Watch
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c9d2cc057c94539448b95208c911b845, type: 2}
-  m_sharedMaterial: {fileID: 6132644206396027478, guid: c9d2cc057c94539448b95208c911b845,
+  m_fontAsset: {fileID: 11400000, guid: e35107041e43ae5469e93eba1c3fff74, type: 2}
+  m_sharedMaterial: {fileID: 6628682747001422315, guid: e35107041e43ae5469e93eba1c3fff74,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -836,8 +836,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 51.16
-  m_fontSizeBase: 51.16
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
