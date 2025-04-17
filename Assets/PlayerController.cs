@@ -12,12 +12,18 @@ public class PlayerController : MonoBehaviour
 
     public Inventory inv;
     public TextMeshPro NameText;
+
+    public Transform SkinParent;
     //public Firearm firearm;
 
 
     private void Start()
     {
         NameText.text = player.PlaName;
+        for (int i = 0; i < SkinParent.childCount; i++)
+        {
+            SkinParent.GetChild(i).gameObject.SetActive(i == player.skinID);
+        }
     }
     public void SetControl()
     {

@@ -18,6 +18,7 @@ public class Player
     public string animType;
     public bool isCam;
     public int gunIndex;
+    public int skinID;
 }
 [Serializable]
 public class Room

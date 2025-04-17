@@ -168,6 +168,7 @@ public class GameController : MonoBehaviour
         if (item.userID == SocketManager.Instance.player.userID)
         {
             pla.GetComponent<PlayerController>().canMove = true;
+            pla.GetComponent<PlayerController>().NameText.gameObject.SetActive(false);
             pla.GetComponentInChildren<CameraManager>().mainCamera.enabled = true;
             pla.GetComponentInChildren<CameraManager>().mainCamera.GetComponent<AudioListener>().enabled = true;
             pla.GetComponentInChildren<CameraManager>().overlayCamera.enabled = true;

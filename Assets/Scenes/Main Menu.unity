@@ -6084,6 +6084,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Select Skin
       objectReference: {fileID: 0}
+    - target: {fileID: 520211289, guid: e7832cc3ea9c6a34eaf66f40642bb7b2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 520211290, guid: e7832cc3ea9c6a34eaf66f40642bb7b2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -6976,7 +6980,7 @@ PrefabInstance:
     - target: {fileID: 7326677168648249110, guid: e7832cc3ea9c6a34eaf66f40642bb7b2,
         type: 3}
       propertyPath: ClosePanels.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7326677168648249110, guid: e7832cc3ea9c6a34eaf66f40642bb7b2,
         type: 3}
@@ -6998,6 +7002,16 @@ PrefabInstance:
       propertyPath: ClosePanels.Array.data[1]
       value: 
       objectReference: {fileID: 1646893649}
+    - target: {fileID: 7326677168648249110, guid: e7832cc3ea9c6a34eaf66f40642bb7b2,
+        type: 3}
+      propertyPath: ClosePanels.Array.data[2]
+      value: 
+      objectReference: {fileID: 1016929774}
+    - target: {fileID: 7326677168648249110, guid: e7832cc3ea9c6a34eaf66f40642bb7b2,
+        type: 3}
+      propertyPath: ClosePanels.Array.data[3]
+      value: 
+      objectReference: {fileID: 1016929774}
     - target: {fileID: 7464468594495175895, guid: e7832cc3ea9c6a34eaf66f40642bb7b2,
         type: 3}
       propertyPath: m_AnchorMax.y

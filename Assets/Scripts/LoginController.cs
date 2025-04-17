@@ -100,7 +100,6 @@ public class LoginController : MonoBehaviour
         currentIndex--;
         if (currentIndex < 0)
             currentIndex = children.Length - 1;
-
         ShowOnlyCurrent();
     }
 
@@ -130,7 +129,8 @@ public class LoginController : MonoBehaviour
             socketID = SocketManager.Instance.socket.Id,
             userID = SocketManager.Instance.socket.Id,
             PlaName = nameInput.text,
-            roomID = "test"
+            roomID = "test",
+            skinID = currentIndex
         };
         SocketManager.Instance.player = pla;
         string js = JsonUtility.ToJson(pla);
