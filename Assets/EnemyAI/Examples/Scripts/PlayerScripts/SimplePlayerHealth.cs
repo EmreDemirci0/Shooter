@@ -22,6 +22,7 @@ public class SimplePlayerHealth : HealthManager
 
 	public override void TakeDamage(Vector3 location, Vector3 direction, float damage, Collider bodyPart, GameObject origin)
 	{
+		Debug.Log("Shoot");
 		health -= damage;
 
 		if (hurtPrefab && canvas)

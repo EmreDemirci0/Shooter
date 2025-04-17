@@ -91,12 +91,14 @@ public class AttackAction : Action
 		Ray ray = new Ray(controller.enemyAnimation.gunMuzzle.position, shotDirection.normalized + imprecision);
 		if (Physics.Raycast(ray, out RaycastHit hit, controller.viewRadius, controller.generalStats.shotMask.value))
 		{
+			Debug.Log("Ray1");
 			// Hit something organic? Consider all layers in target mask as organic.
 			bool isOrganic = ((1 << hit.transform.root.gameObject.layer) & controller.generalStats.targetMask) != 0;
 			DoShot(controller, ray.direction, hit.point, hit.normal, isOrganic, hit.transform);
 		}
 		else
 		{
+			Debug.Log("Ray2");
 			// Hit nothing (miss shot), shot at desired direction with imprecision.
 			DoShot(controller, ray.direction, ray.origin + (ray.direction * 500f));
 		}
@@ -105,6 +107,7 @@ public class AttackAction : Action
 	private void DoShot(StateController controller, Vector3 direction, Vector3 hitPoint,
 		Vector3 hitNormal = default, bool organic = false, Transform target = null)
 	{
+		Debug.Log("DOSHOT");
 		// Draw muzzle flash.
 		GameObject muzzleFlash = Instantiate(controller.classStats.muzzleFlash, controller.enemyAnimation.gunMuzzle);
 		muzzleFlash.transform.localPosition = Vector3.zero;
@@ -133,6 +136,7 @@ public class AttackAction : Action
 			HealthManager targetHealth = target.GetComponent<HealthManager>();
 			if(targetHealth)
 			{
+				Debug.Log("Shoot3");
 				targetHealth.TakeDamage(hitPoint, direction, controller.classStats.bulletDamage, target.GetComponent<Collider>(), controller.gameObject);
 			}
 		}

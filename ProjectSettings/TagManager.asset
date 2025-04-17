@@ -4,25 +4,25 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Laser Line
+  - Enemy
   - RifleAnim
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - No Player Collision
+  - 
   - Water
   - UI
+  - post
   - 
-  - 
+  - Cover
+  - Ignore Shot
+  - Cover Invisible
   - Player
+  - Enemy
+  - Bound
   - 
   - 
-  - Post-Procssing
-  - FPS Object
-  - Enviroment
-  - 
-  - Iteractable
   - 
   - 
   - 

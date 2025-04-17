@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine;
 using System;
+using EnemyAI;
+using UnityEngine.AI;
 
 namespace Akila.FPSFramework
 {
@@ -146,10 +148,14 @@ namespace Akila.FPSFramework
 
             if (destoryOnDeath && !destroyRoot) Destroy(gameObject, destroyDelay);
             if (destoryOnDeath && destroyRoot) Destroy(gameObject.transform.parent.gameObject, destroyDelay);
-            if (!died) Respwan();
+            //if (!died) Respwan();
 
             if (ragdoll) ragdoll.Enable(damageDirection);
-
+            
+            if (this.gameObject.GetComponent<NavMeshAgent>())
+                this.gameObject.GetComponent<NavMeshAgent>().enabled = false;
+            if (this.gameObject.GetComponent<StateController>())
+                this.gameObject.GetComponent<StateController>().enabled = false;
             if (deathEffect)
             {
                 GameObject effect = Instantiate(deathEffect, transform.position, transform.rotation);

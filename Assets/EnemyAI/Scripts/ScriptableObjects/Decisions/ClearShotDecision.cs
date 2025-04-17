@@ -17,21 +17,26 @@ public class ClearShotDecision : Decision
 	// Cast sphere for near obstacles, and line to personal target (not the aim target) for clean shot.
 	private bool HaveClearShot(StateController controller)
 	{
-		Vector3 shotOrigin = controller.transform.position + Vector3.up * (controller.generalStats.aboveCoverHeight + controller.nav.radius);
-		Vector3 shotDirection = controller.personalTarget - shotOrigin;
-
-		// Cast sphere in target direction to check for obstacles in near radius.
-		bool obscuredShot = Physics.SphereCast(shotOrigin, controller.nav.radius, shotDirection, out RaycastHit hit,
-			controller.nearRadius, controller.generalStats.coverMask | controller.generalStats.obstacleMask);
-		if (!obscuredShot)
+		if (controller.nav && controller.nav.enabled && controller.nav.isOnNavMesh)
 		{
-			// No near obstacles, cast line to target position and check for clear shot.
-			obscuredShot = Physics.Raycast(shotOrigin, shotDirection, out hit, shotDirection.magnitude,
-				controller.generalStats.coverMask | controller.generalStats.obstacleMask);
-			// Hit something, is it the target? If true, shot is clear.
-			if(obscuredShot)
-				obscuredShot = !(hit.transform.root == controller.aimTarget.root);
+			Vector3 shotOrigin = controller.transform.position + Vector3.up * (controller.generalStats.aboveCoverHeight + controller.nav.radius);
+			Vector3 shotDirection = controller.personalTarget - shotOrigin;
+
+			// Cast sphere in target direction to check for obstacles in near radius.
+			bool obscuredShot = Physics.SphereCast(shotOrigin, controller.nav.radius, shotDirection, out RaycastHit hit,
+				controller.nearRadius, controller.generalStats.coverMask | controller.generalStats.obstacleMask);
+			if (!obscuredShot)
+			{
+				// No near obstacles, cast line to target position and check for clear shot.
+				obscuredShot = Physics.Raycast(shotOrigin, shotDirection, out hit, shotDirection.magnitude,
+					controller.generalStats.coverMask | controller.generalStats.obstacleMask);
+				// Hit something, is it the target? If true, shot is clear.
+				if (obscuredShot)
+					obscuredShot = !(hit.transform.root == controller.aimTarget.root);
+			}
+			return !obscuredShot;
 		}
-		return !obscuredShot;
+		return false;
+
 	}
 }

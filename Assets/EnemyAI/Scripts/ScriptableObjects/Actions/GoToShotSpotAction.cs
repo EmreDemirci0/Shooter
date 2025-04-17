@@ -14,8 +14,12 @@ public class GoToShotSpotAction : Action
 	{
 		// Setup initial values for the action.
 		controller.focusSight = false;
-		controller.nav.destination = controller.personalTarget;
-		controller.nav.speed = controller.generalStats.chaseSpeed;
+		if (controller.nav && controller.nav.enabled && controller.nav.isOnNavMesh)
+		{
+			controller.nav.destination = controller.personalTarget;
+			controller.nav.speed = controller.generalStats.chaseSpeed;
+		}
+
 		controller.enemyAnimation.AbortPendingAim();
 	}
 }

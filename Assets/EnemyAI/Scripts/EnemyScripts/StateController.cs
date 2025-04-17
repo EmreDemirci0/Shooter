@@ -138,7 +138,10 @@ namespace EnemyAI
 			// Trigger initial state enable function.
 			currentState.OnEnableActions(this);
 		}
-
+		private void OnEnable()
+		{
+			
+		}
 		void Update()
 		{
 			// Reset blocked sight test on current game loop iteration.
@@ -150,6 +153,12 @@ namespace EnemyAI
 			currentState.DoActions(this);
 			// Check current FSM state transition conditions.
 			currentState.CheckTransitions(this);
+
+			if (aimTarget.transform.parent==null)
+			{
+				aimTarget.transform.parent = GameObject.Find("MyTarget2").transform;
+				Debug.Log("atandı");
+			}
 		}
 
 		// Change the current FSM state (called externally).

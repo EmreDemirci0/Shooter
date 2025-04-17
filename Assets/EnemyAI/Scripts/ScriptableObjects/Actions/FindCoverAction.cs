@@ -23,15 +23,23 @@ public class FindCoverAction : Action
 		// No cover spot.
 		if (Vector3.Equals(potentialCover, Vector3.positiveInfinity))
 		{
-			controller.nav.destination = controller.transform.position;
+			if (controller.nav && controller.nav.enabled && controller.nav.isOnNavMesh)
+			{
+				controller.nav.destination = controller.transform.position;
+			}
+			
 			return;
 		}
 		// Closer cover spot, update spot position.
 		else if ((controller.personalTarget - potentialCover).sqrMagnitude < (controller.personalTarget - controller.CoverSpot).sqrMagnitude
 			&& !controller.IsNearOtherSpot(potentialCover, controller.nearRadius))
 		{
+			if (controller.nav && controller.nav.enabled && controller.nav.isOnNavMesh)
+			{
 			controller.coverHash = (int)nextCoverData[0];
 			controller.CoverSpot = potentialCover;
+			}
+			
 		}
 		// Set navigation parameters.
 		controller.nav.destination = controller.CoverSpot;

@@ -29,35 +29,38 @@ public class PatrolAction : Action
 		// No patrol waypoints, stand idle.
 		if (controller.patrolWayPoints.Count == 0)
 			return;
-		// Set navigation parameters.
-		controller.focusSight = false;
-		controller.nav.speed = controller.generalStats.patrolSpeed;
-		// Reached waypoint, wait for a moment before keep patrolling.
-		if (controller.nav.remainingDistance <= controller.nav.stoppingDistance && !controller.nav.pathPending)
+		if (controller.nav && controller.nav.enabled && controller.nav.isOnNavMesh)
 		{
-			controller.variables.patrolTimer += Time.deltaTime;
-
-			if (controller.variables.patrolTimer >= controller.generalStats.patrolWaitTime)
+			// Set navigation parameters.
+			controller.focusSight = false;
+			controller.nav.speed = controller.generalStats.patrolSpeed;
+			// Reached waypoint, wait for a moment before keep patrolling.
+			if (controller.nav.remainingDistance <= controller.nav.stoppingDistance && !controller.nav.pathPending)
 			{
-				controller.waypointIndex = (controller.waypointIndex + 1) % controller.patrolWayPoints.Count;
-				controller.variables.patrolTimer = 0f;
+				controller.variables.patrolTimer += Time.deltaTime;
+
+				if (controller.variables.patrolTimer >= controller.generalStats.patrolWaitTime)
+				{
+					controller.waypointIndex = (controller.waypointIndex + 1) % controller.patrolWayPoints.Count;
+					controller.variables.patrolTimer = 0f;
+				}
 			}
-		}
-		// Set next patrol waypoint.
-		try
-		{
-			controller.nav.destination = controller.patrolWayPoints[controller.waypointIndex].position;
-		}
-		catch (UnassignedReferenceException)
-		{
-			// Suggest patrol waypoints for NPC, if none.
-			Debug.LogWarning("No waypoints assigned for " + controller.transform.name+", enemy will remain idle");
-			// No waypoints, create single position to stand still.
-			controller.patrolWayPoints = new List<Transform>
+			// Set next patrol waypoint.
+			try
+			{
+				controller.nav.destination = controller.patrolWayPoints[controller.waypointIndex].position;
+			}
+			catch (UnassignedReferenceException)
+			{
+				// Suggest patrol waypoints for NPC, if none.
+				Debug.LogWarning("No waypoints assigned for " + controller.transform.name + ", enemy will remain idle");
+				// No waypoints, create single position to stand still.
+				controller.patrolWayPoints = new List<Transform>
 			{
 				controller.transform
 			};
-			controller.nav.destination = controller.transform.position;
+				controller.nav.destination = controller.transform.position;
+			}
 		}
 	}
 }

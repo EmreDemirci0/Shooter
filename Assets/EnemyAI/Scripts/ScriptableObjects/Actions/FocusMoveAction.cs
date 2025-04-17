@@ -17,15 +17,23 @@ public class FocusMoveAction : Action
 		// Align the NPC orientation.
 		if (!aligned)
 		{
-			controller.nav.destination = controller.personalTarget;
-			controller.nav.speed = 0f;
+			if (controller.nav && controller.nav.enabled && controller.nav.isOnNavMesh)
+			{
+				controller.nav.destination = controller.personalTarget;
+				controller.nav.speed = 0f;
+			}
+
 			// Only start strafing after orientation is aligned.
 			if (controller.enemyAnimation.angularSpeed == 0)
 			{
 				controller.Strafing = true;
 				aligned = true;
-				controller.nav.destination = currentDest;
-				controller.nav.speed = controller.generalStats.evadeSpeed;
+				if (controller.nav && controller.nav.enabled && controller.nav.isOnNavMesh)
+				{
+					controller.nav.destination = currentDest;
+					controller.nav.speed = controller.generalStats.evadeSpeed;
+				}
+
 			}
 		}
 		// Orientation is aligned, check if NPC has clear shot to the target.
@@ -39,7 +47,8 @@ public class FocusMoveAction : Action
 				controller.Aiming = controller.haveClearShot;
 				// NPC is not returning to cover, will stop to shot.
 				if (controller.haveClearShot && !Equals(currentDest, controller.CoverSpot))
-					controller.nav.destination = controller.transform.position;
+					if (controller.nav && controller.nav.enabled && controller.nav.isOnNavMesh)
+						controller.nav.destination = controller.transform.position;
 			}
 			controller.hadClearShot = controller.haveClearShot;
 		}
@@ -49,7 +58,11 @@ public class FocusMoveAction : Action
 	{
 		// Setup initial values for the action.
 		controller.hadClearShot = controller.haveClearShot = false;
-		currentDest = controller.nav.destination;
+		if (controller.nav && controller.nav.enabled && controller.nav.isOnNavMesh)
+		{
+			currentDest = controller.nav.destination;
+		}
+		
 		controller.focusSight = true;
 		aligned = false;
 	}

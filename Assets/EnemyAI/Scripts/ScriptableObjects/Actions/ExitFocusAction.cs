@@ -17,7 +17,11 @@ public class ExitFocusAction : Action
 		controller.variables.feelAlert = false;
 		controller.variables.hearAlert = false;
 		controller.Strafing = false;
-		controller.nav.destination = controller.personalTarget;
-		controller.nav.speed = 0f;
+		if (controller.nav && controller.nav.enabled && controller.nav.isOnNavMesh)
+		{
+			controller.nav.destination = controller.personalTarget;
+			controller.nav.speed = 0f;
+		}
+		
 	}
 }

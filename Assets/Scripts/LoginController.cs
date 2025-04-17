@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LoginController : MonoBehaviour
 {
@@ -16,6 +17,15 @@ public class LoginController : MonoBehaviour
     public GameObject[] ClosePanels;
     public GameObject menuGun;
     public Vector3 menuGunRotationSpeed = new Vector3(20f, 30f, 40f);
+
+
+    //skin secme
+    public GameObject parent;           // Alt objelerin bulunduðu parent
+    public Button leftButton;           // Sol buton
+    public Button rightButton;          // Sað buton
+
+    private int currentIndex = 0;
+    private Transform[] children;
     void Start()
     {
 
@@ -25,7 +35,9 @@ public class LoginController : MonoBehaviour
             var room = JsonConvert.DeserializeObject<List<Room>>(rooms.ToString())[0];
             SocketManager.Instance.room = room;
             SocketManager.Instance.player.roomID = room.roomID;
-            LoadingScreen.LoadScene("Game fadim");
+           LoadingScreen.LoadScene("FPS");
+           // LoadingScreen.LoadScene("Game fadim");
+
 
         });
 
@@ -56,8 +68,50 @@ public class LoginController : MonoBehaviour
             }
 
         });
+
+
+        //skin secme
+        // Child objeleri diziye al
+        int count = parent.transform.childCount;
+        children = new Transform[count];
+
+        for (int i = 0; i < count; i++)
+        {
+            children[i] = parent.transform.GetChild(i);
+        }
+
+        // Ýlk objeyi göster, diðerlerini kapat
+        ShowOnlyCurrent();
+
+        // Butonlara listener ekle
+        leftButton.onClick.AddListener(Previous);
+        rightButton.onClick.AddListener(Next);
+    }
+    void ShowOnlyCurrent()
+    {
+        for (int i = 0; i < children.Length; i++)
+        {
+            children[i].gameObject.SetActive(i == currentIndex);
+        }
     }
 
+    void Previous()
+    {
+        currentIndex--;
+        if (currentIndex < 0)
+            currentIndex = children.Length - 1;
+
+        ShowOnlyCurrent();
+    }
+
+    void Next()
+    {
+        currentIndex++;
+        if (currentIndex >= children.Length)
+            currentIndex = 0;
+
+        ShowOnlyCurrent();
+    }
     private void Update()
     {
         if (menuGun != null)

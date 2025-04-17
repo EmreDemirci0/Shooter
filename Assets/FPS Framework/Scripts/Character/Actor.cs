@@ -73,6 +73,7 @@ namespace Akila.FPSFramework
 
         public void ConfirmDeath()
         {
+            Debug.Log("ConfirmDeath"+damageable.gameObject.name+" : "+ damageable.damageSource.gameObject.name);
             if (damageable == null)
             {
                 Debug.LogError("Damagable (IDamagable) is not set.", gameObject);
